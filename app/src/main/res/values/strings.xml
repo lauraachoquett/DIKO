@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">DIKO</string>
+    <string name="searching">Rechercher</string>
+    <string name="dictionary">Dictionnaire</string>
+    <string name="favorites">Mes mots</string>
+    <string name="histrory">Historique</string>
+    <string name="definitions">Définitions</string>
+    <string name="derives">Dérivés</string>
+    <string name="syn">Synonymes</string>
+    <string name="paquet">Paquets</string>
+    <string name="learningPackage">Mes mots</string>
+    <string name="namePackage">Nom du paquet</string>
+
+</resources>

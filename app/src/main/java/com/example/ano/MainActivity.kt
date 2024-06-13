@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     DataSource.loadJSONFromRaw(this@MainActivity, R.raw.donnees6)
+                    DataSource.loadCurrentId(this@MainActivity)
                     AnoApp()
 
 
@@ -34,12 +35,14 @@ class MainActivity : ComponentActivity() {
         SharedPreferencesManager.saveFavorites(this)
         SharedPreferencesManager.saveHistoryListAndFavoriteList(this)
         SharedPreferencesManager.savePackages(this)
+        SharedPreferencesManager.saveCurrentId(this)
     }
     override fun onStop(){
         super.onStop()
         SharedPreferencesManager.saveFavorites(this)
         SharedPreferencesManager.saveHistoryListAndFavoriteList(this)
         SharedPreferencesManager.savePackages(this)
+        SharedPreferencesManager.saveCurrentId(this)
 
     }
 }

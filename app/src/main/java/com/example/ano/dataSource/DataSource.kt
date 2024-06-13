@@ -5,6 +5,7 @@ import com.example.ano.R
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlin.properties.Delegates
 
 
 @Serializable
@@ -42,12 +43,13 @@ object DataSource {
     lateinit var listHistory: MutableList<String>
     lateinit var listFavorites : MutableList<String>
     lateinit var mapOfPackages: MutableMap<Int, paquetAttributes>
+    var currentId by Delegates.notNull<Int>()
 
     // Initialisation de la mapOfWords à partir du fichier JSON
     fun loadJSONFromRaw(context: Context, resourceId: Int) {
         //Procédure pour sauvegarder les données :
         val sharedPreferences = context.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-
+        val delimiters = "///"
         //Initialisation de mapOfWords donc du dictionnaire
         val jsonString = context.resources.openRawResource(resourceId).bufferedReader().use { it.readText() }
         val map: Map<String, List<InformationWordByNature>> = Json.decodeFromString(jsonString)
@@ -63,8 +65,8 @@ object DataSource {
         val favoritesString = sharedPreferences.getString("favorites", null)
 
         // Convertir les chaînes en listes
-        listHistory = historyString?.split(",")?.toMutableList() ?: mutableListOf()
-        listFavorites =favoritesString?.split(",")?.toMutableList() ?: mutableListOf()
+        listHistory = historyString?.split(delimiters)?.toMutableList() ?: mutableListOf()
+        listFavorites =favoritesString?.split(delimiters)?.toMutableList() ?: mutableListOf()
 
         //Initialisation des paquets :
         val idOfPackages = sharedPreferences.getString("idOfPackages",null)
@@ -75,25 +77,25 @@ object DataSource {
         }
         else{
             val idOfPackages = sharedPreferences.getString("idOfPackages", null)
-            val listOfIdPackages = idOfPackages?.split(",")?.toMutableList() ?: mutableListOf()
+            val listOfIdPackages = idOfPackages?.split(delimiters)?.toMutableList() ?: mutableListOf()
 
             mapOfPackages = listOfIdPackages.associateBy(
                 { it.toInt() },
                 {
                     val stringOfWords = sharedPreferences.getString("wordsInPackage_$it", null)
-                    val listOfWords = stringOfWords?.split(",")?.toMutableList() ?: mutableListOf()
+                    val listOfWords = stringOfWords?.split(delimiters)?.toMutableList() ?: mutableListOf()
                     val wordsAndInfo = mutableMapOf<String, List<InformationWordByNature>>()
 
                     listOfWords.forEach { word ->
                         val listInfoWordByNature = mutableListOf<InformationWordByNature>()
                         val stringOfDifferentNature = sharedPreferences.getString("naturesOf_$word", null)
-                        val listOfNature = stringOfDifferentNature?.split(",")?.toMutableList() ?: mutableListOf()
+                        val listOfNature = stringOfDifferentNature?.split(delimiters)?.toMutableList() ?: mutableListOf()
 
                         listOfNature.forEach { nature ->
                             mapOfWords[word]?.infoWordByNature?.forEach { infoByNature ->
-                                if (infoByNature.nature == nature) {
+                                if (infoByNature.nature == nature && listInfoWordByNature.none {info-> info.nature == nature }) {
                                     val stringOfDefinition = sharedPreferences.getString("defSelected_$word $nature", null)
-                                    val listOfDefinitions = stringOfDefinition?.split(",")?.toMutableList() ?: mutableListOf()
+                                    val listOfDefinitions = stringOfDefinition?.split(delimiters)?.toMutableList() ?: mutableListOf()
                                     val mapOfSelectedDefinitions = extractPairs(infoByNature.definitions, listOfDefinitions)
                                     listInfoWordByNature.add(
                                         InformationWordByNature(
@@ -106,10 +108,12 @@ object DataSource {
                                     var show = infoByNature.definitions
                                     Log.d("LoadPackages", "Loaded definitions for $word $nature: $listOfDefinitions")
                                     Log.d("LoadPackages", "MapOfSelectedDefinition $word $nature: $mapOfSelectedDefinitions")
-                                    Log.d("LoadPackages", "MapOfSelectedDefinition $word $nature: $show")
+                                    Log.d("LoadPackages", "Show $word $nature: $show")
                                 }
                             }
                         }
+                        Log.d("LoadPackages", "List $word : $listInfoWordByNature")
+
                         wordsAndInfo[word] = listInfoWordByNature
                     }
 
@@ -119,7 +123,13 @@ object DataSource {
             ) as MutableMap<Int, paquetAttributes>
         }
     }
+    fun loadCurrentId(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("IdGeneratorPrefs", Context.MODE_PRIVATE)
+        currentId = sharedPreferences.getInt("currentId", 1) // 1 est la valeur par défaut
+    }
 }
+
+
 
 fun <E> extractPairs(map: Map<String,E>, keys: List<String>): MutableMap<String, E> {
     val extractedPairs: MutableMap<String,E > = mutableMapOf()

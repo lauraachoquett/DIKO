@@ -61,7 +61,7 @@ class AnoViewModel : ViewModel(){
     ///////////////////////////////////////////IdGenerator pour les paquets//////////////////////
 
     companion object IdGenerator {
-        private var currentId: Int = 1
+        var currentId = DataSource.currentId
 
         fun generateId(): Int {
             return currentId++

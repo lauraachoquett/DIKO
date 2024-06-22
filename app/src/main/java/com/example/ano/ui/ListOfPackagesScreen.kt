@@ -145,7 +145,7 @@ fun ListOfPackagesScreen(
                     Element(
                         id = id,
                         name = paquets[id]?.name,
-                        size = paquets[id]?.wordsAndInfo?.size,
+                        size = paquets[id]?.mapWordToCard?.size,
                         onPackageClicked = onPackageClicked,
                         modifier = Modifier.padding(innerPadding),
                         onLongClick = {

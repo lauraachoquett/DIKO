@@ -234,6 +234,7 @@ fun DictionaryDefinitionScreen(
                     onCheckedDefinition=onCheckedDefinition,
                 )
             }
+
         }
         Spacer(modifier = Modifier.height(72.dp))
         if(PackageModifierChoice){

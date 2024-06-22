@@ -48,14 +48,14 @@ object SharedPreferencesManager {
 
         DataSource.mapOfPackages.forEach { (key, value) ->
             // Enregistrement des mots dans chaque paquet
-            editor.putString("wordsInPackage_$key", value.wordsAndInfo?.keys?.joinToString(separator = separator))
+            editor.putString("wordsInPackage_$key", value.mapWordToCard?.keys?.joinToString(separator = separator))
             Log.d("ahah","$key")
             // Enregistrement des noms de paquets
             editor.putString("nameOfPackage_$key", value.name)
 
-            value.wordsAndInfo?.forEach { (word, info) ->
+            value.mapWordToCard?.forEach { (word, info) ->
                 val natures = mutableListOf<String>()
-                info.forEach { infoByNature ->
+                info.wordAttributes?.listInfoWordByNature?.forEach { infoByNature ->
                     val definitions = mutableListOf<String>()
                     val nature = infoByNature.nature
                     natures.add(nature)

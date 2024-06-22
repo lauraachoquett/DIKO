@@ -2,6 +2,7 @@ package com.example.ano.dataSource
 import android.content.Context
 import android.util.Log
 import com.example.ano.R
+import com.example.ano.model.AnoAnki
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -28,13 +29,17 @@ data class InformationWordByNatureAndFavorite(
     var isFavorite : Boolean = false
 )
 
-
-data class paquetAttributes(
-    var name : String?,
-    var wordsAndInfo: Map<String,List<InformationWordByNature>>?,
+data class wordAttributes(
+    var listInfoWordByNature: List<InformationWordByNature>?,
+    var delay: Long = 60 * 1000L, // Default delay in milliseconds
+    var ease: Double = 2.5
 )
 
 
+data class paquetAttributes(
+    var name : String?,
+    var mapWordToCard: Map<String, AnoAnki.Card>?,
+)
 
 
 object DataSource {
@@ -73,7 +78,15 @@ object DataSource {
         if(idOfPackages.isNullOrEmpty()){
             var id = 0
             var wordsAndInfoFavorites = extractPairs(map, listFavorites);
-            mapOfPackages= mutableMapOf(id to paquetAttributes(wordsAndInfo =  wordsAndInfoFavorites,name="Mes mots"))
+
+            var wordsAndInfoMyWords : MutableMap<String,AnoAnki.Card>? = mutableMapOf()
+            wordsAndInfoFavorites.keys.forEach{ word ->
+                var wordAttributes = wordAttributes(listInfoWordByNature = wordsAndInfoFavorites[word])
+                var card = AnoAnki.Card(wordAttributes)
+                wordsAndInfoMyWords?.put(word,card)
+            }
+
+            mapOfPackages= mutableMapOf(id to paquetAttributes(mapWordToCard =  wordsAndInfoMyWords,name="Mes mots"))
         }
         else{
             val idOfPackages = sharedPreferences.getString("idOfPackages", null)
@@ -118,7 +131,13 @@ object DataSource {
                     }
 
                     val nameOfPackage = sharedPreferences.getString("nameOfPackage_$it", null)
-                    paquetAttributes(wordsAndInfo = wordsAndInfo, name = nameOfPackage)
+                    var wordsAndInfoPackage : MutableMap<String,AnoAnki.Card>? = mutableMapOf()
+                    wordsAndInfo.keys.forEach{ word ->
+                        var wordAttributes = wordAttributes(listInfoWordByNature = wordsAndInfo[word])
+                        var card = AnoAnki.Card(wordAttributes)
+                        wordsAndInfoPackage?.put(word,card)
+                    }
+                    paquetAttributes(mapWordToCard = wordsAndInfoPackage, name = nameOfPackage)
                 }
             ) as MutableMap<Int, paquetAttributes>
         }
@@ -128,8 +147,6 @@ object DataSource {
         currentId = sharedPreferences.getInt("currentId", 1) // 1 est la valeur par défaut
     }
 }
-
-
 
 fun <E> extractPairs(map: Map<String,E>, keys: List<String>): MutableMap<String, E> {
     val extractedPairs: MutableMap<String,E > = mutableMapOf()
@@ -141,12 +158,6 @@ fun <E> extractPairs(map: Map<String,E>, keys: List<String>): MutableMap<String,
     Log.d("LoadPackages", "Extracted pairs: $extractedPairs")
     return extractedPairs
 }
-
-
-
-
-
-
 
 fun main() {
     val jsonString = R.raw.donnees.toString()

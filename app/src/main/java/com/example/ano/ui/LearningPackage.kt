@@ -45,15 +45,23 @@ fun LearningPackage(
    wordInfos: List<InformationWordByNature>,
    wordToDisplayInAPackage : () -> Unit,
    onWordClicked :(String)->Unit,
+   onEncore : ()->Unit,
+   onDifficle :()->Unit,
+   onBien :()->Unit,
+   onFacile:()->Unit
 ) {
     var recto by remember { mutableStateOf(true) }
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         ElevatedCard(
-            onClick = { if(recto){recto = !recto} else{
-                wordToDisplayInAPackage()
-                recto = true }},
+            onClick = {
+                    if(recto)
+                        {recto = !recto}
+                    else{
+
+                    }
+                      },
             modifier = Modifier
                 .height(708.dp)
                 .padding(8.dp)
@@ -115,31 +123,34 @@ fun LearningPackage(
                 }
             }
         }
-        var options = listOf("Difficile", "Moyen", "Facile")
+        var options = listOf("Encore","Difficile", "Bien", "Facile")
+        var function = listOf(onEncore(),onDifficle(),onBien(),onFacile())
         var selectedIndex by remember { mutableIntStateOf(0) }
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(fraction = 1f)
-                .padding(8.dp)
-        ) {
-            options.forEachIndexed { index, label ->
-                Button(
-                    onClick = {
-                        selectedIndex = index
-                        recto =true
-                        wordToDisplayInAPackage()
-                    },
-                    shape= MaterialTheme.shapes.small,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(2.dp)
-                ) {
-                    Text(
-                        text =label,
-                        fontWeight = FontWeight.Light,
-                        fontSize = 20.sp)
+        if(!recto){
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(fraction = 1f)
+                    .padding(4.dp)
+            ) {
+                options.forEachIndexed { index, label ->
+                    Button(
+                        onClick = {
+                            selectedIndex = index
+                            recto = true
+                            function[index]
+                        },
+                        shape= MaterialTheme.shapes.small,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(0.5.dp)
+                    ) {
+                        Text(
+                            text =label,
+                            fontWeight = FontWeight.Light,
+                            fontSize = 15.sp)
+                    }
                 }
             }
         }

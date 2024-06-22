@@ -11,6 +11,7 @@ import com.example.ano.dataSource.DataSource.mapOfWords
 import com.example.ano.dataSource.InformationWordByNature
 import com.example.ano.dataSource.extractPairs
 import com.example.ano.dataSource.paquetAttributes
+import com.example.ano.dataSource.wordAttributes
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -58,6 +59,8 @@ class AnoViewModel : ViewModel(){
     //Première clé : nature
     lateinit var selectedDefinitionByNature : MutableMap<String,typeSelectedInfoForLearning>
 
+    lateinit var currentCard : AnoAnki.Card
+
     ///////////////////////////////////////////IdGenerator pour les paquets//////////////////////
 
     companion object IdGenerator {
@@ -94,7 +97,7 @@ class AnoViewModel : ViewModel(){
         _uiState.update { currentState ->
             val updatedPaquets = currentState.paquets.toMutableMap().apply {
                 // Ajouter ou mettre à jour la paire clé-valeur dans la carte
-                this[id] = paquetAttributes(wordsAndInfo = mapOf(),name =name)
+                this[id] = paquetAttributes(mapWordToCard = mapOf(),name =name)
             }
             currentState.copy(
                 paquets = updatedPaquets.toMap(),
@@ -112,7 +115,7 @@ class AnoViewModel : ViewModel(){
     }
 
     fun packageIsNotEmpty():Boolean{
-        val wordsInThePackage = uiState.value.paquets[currentPackageId]?.wordsAndInfo?.keys?.toList()
+        val wordsInThePackage = uiState.value.paquets[currentPackageId]?.mapWordToCard?.keys?.toList()
         val size = wordsInThePackage?.size
         if(size ==null || size ==0){
             return false
@@ -124,13 +127,14 @@ class AnoViewModel : ViewModel(){
     fun wordToDisplayInAPackage(){
         val paquetAttributes =uiState.value.paquets[currentPackageId]
         if (paquetAttributes != null) {
-            if(paquetAttributes.wordsAndInfo != null ){
-                val listOfWordsInThePackage= paquetAttributes.wordsAndInfo!!.keys.toList()
+            if(paquetAttributes.mapWordToCard != null ){
+                val listOfWordsInThePackage= paquetAttributes.mapWordToCard!!.keys.toList()
                 if(listOfWordsInThePackage != null){
                     val randomIndex = listOfWordsInThePackage?.let { Random.nextInt(it.size) }
                     wordOnLearningPackageScreen = listOfWordsInThePackage[randomIndex!!]
-                    infoDefCurrentWord = uiState.value.paquets[currentPackageId]?.wordsAndInfo?.get(wordOnLearningPackageScreen)!!
+                    infoDefCurrentWord = uiState.value.paquets[currentPackageId]?.mapWordToCard?.get(wordOnLearningPackageScreen)!!.wordAttributes.listInfoWordByNature!!
                     updateCurrentWord(wordOnLearningPackageScreen)
+                    updateCurrentCard()
                 }
             }
         }
@@ -140,7 +144,7 @@ class AnoViewModel : ViewModel(){
         val paquets = uiState.value.paquets
         selectedPackage = mutableMapOf() // Initialisez selectedPackage
         for (id in paquets.keys.toList()) {
-            val words = paquets[id]?.wordsAndInfo?.keys?.toList()
+            val words = paquets[id]?.mapWordToCard?.keys?.toList()
             val isSelected = (words?.contains(currentWord)  == true)
             selectedPackage[id] = isSelected
         }
@@ -162,7 +166,7 @@ class AnoViewModel : ViewModel(){
         var mapOfSelectedDefinition : MutableMap<String,Boolean> = mutableMapOf()
         if(idOfAPackage > -1){
             Log.d("MyTag","paquets ok")
-            val listInfoByNatureInPackage = DataSource.mapOfPackages[idOfAPackage]?.wordsAndInfo?.get(currentWord)
+            val listInfoByNatureInPackage = DataSource.mapOfPackages[idOfAPackage]?.mapWordToCard?.get(currentWord)?.wordAttributes?.listInfoWordByNature
             if (listInfoByNature != null) {
                 for (info in listInfoByNature){
                     val definitions = info.definitions.keys.toList()
@@ -205,7 +209,7 @@ class AnoViewModel : ViewModel(){
         val packages = DataSource.mapOfPackages
         var idWord : Int = -1
         for(id in packages.keys.toList()){
-            if(packages[id]?.wordsAndInfo?.keys?.toList()?.contains(currentWord) == true){
+            if(packages[id]?.mapWordToCard?.keys?.toList()?.contains(currentWord) == true){
                 idWord = id
             }
         }
@@ -241,7 +245,7 @@ class AnoViewModel : ViewModel(){
 
 
     //Cette fonction créer le type à mettre pour savoir quelles natures et quelles définitions ont été choisies
-    fun setIntrestingInfo() : MutableList<InformationWordByNature> {
+    fun setIntrestingInfo(): AnoAnki.Card {
         var listInfoWordByNature: MutableList<InformationWordByNature> = mutableListOf()
         var listOfDefinitions: MutableList<String>
         selectedDefinitionByNature?.forEach { (nature, value) ->
@@ -266,7 +270,8 @@ class AnoViewModel : ViewModel(){
                 }
             }
         }
-        return listInfoWordByNature
+        var card = AnoAnki.Card(wordAttributes(listInfoWordByNature = listInfoWordByNature))
+        return card
     }
 
     fun isThereAnyDefinitionSelected():Boolean{
@@ -282,10 +287,10 @@ class AnoViewModel : ViewModel(){
         _uiState.update { currentState->
             val updatedPaquets = currentState.paquets.toMutableMap()
             for(id in updatedPaquets.keys.toList()){
-                if(updatedPaquets[id]?.wordsAndInfo?.keys?.toList()?.contains(currentWord) == true){
-                    val newWordsAndInfo = updatedPaquets[id]?.wordsAndInfo?.toMutableMap()
-                    newWordsAndInfo?.set(currentWord, setIntrestingInfo())
-                    val newpaquetAttributes = paquetAttributes(name = updatedPaquets[id]?.name, wordsAndInfo =newWordsAndInfo)
+                if(updatedPaquets[id]?.mapWordToCard?.keys?.toList()?.contains(currentWord) == true){
+                    val newmapWordToCard = updatedPaquets[id]?.mapWordToCard?.toMutableMap()
+                    newmapWordToCard?.set(currentWord, setIntrestingInfo())
+                    val newpaquetAttributes = paquetAttributes(name = updatedPaquets[id]?.name, mapWordToCard =newmapWordToCard)
                     updatedPaquets[id]=newpaquetAttributes
                 }
             }
@@ -301,13 +306,13 @@ class AnoViewModel : ViewModel(){
             val updatedPaquets = currentState.paquets.toMutableMap()
             val currentPackageAttributes = currentState.paquets[id]
             if (currentPackageAttributes != null) {
-                val words = currentPackageAttributes.wordsAndInfo?.keys?.toList()
+                val words = currentPackageAttributes.mapWordToCard?.keys?.toList()
                 if (words != null) {
                     if (words.contains(currentWord)) {
-                        val newMap = currentPackageAttributes.wordsAndInfo?.toMutableMap()
+                        val newMap = currentPackageAttributes.mapWordToCard?.toMutableMap()
                         newMap?.remove(currentWord)
                         val newPackageAttributes = paquetAttributes(
-                            wordsAndInfo = newMap,
+                            mapWordToCard = newMap,
                             name = currentPackageAttributes.name
                         )
                         updatedPaquets[id] = newPackageAttributes
@@ -327,18 +332,20 @@ class AnoViewModel : ViewModel(){
             val currentPackageAttributes = currentState.paquets[id]
             if (currentPackageAttributes != null) {
                 //words in the package
-                val words = currentPackageAttributes.wordsAndInfo?.keys?.toList()
+                val words = currentPackageAttributes.mapWordToCard?.keys?.toList()
                 if (words != null) {
                     if (!words.contains(currentWord)) {
-                        val newMap = currentPackageAttributes.wordsAndInfo?.toMutableMap()
+                        val newMap = currentPackageAttributes.mapWordToCard?.toMutableMap()
+
                         mapOfWords[currentWord]?.infoWordByNature?.let {
+                            var card = AnoAnki.Card(wordAttributes(it))
                             newMap!!.put(
                                 currentWord,
-                                it
+                                card
                             )
                         }
                         val newPackageAttributes = paquetAttributes(
-                            wordsAndInfo = newMap,
+                            mapWordToCard = newMap,
                             name = currentPackageAttributes.name
                         )
                         updatedPaquets[id] = newPackageAttributes
@@ -389,13 +396,13 @@ class AnoViewModel : ViewModel(){
         fun changePackageName() {
             if (currentPackageId != 0) {
                 var newName = newPackageName.trim()
-                var words = DataSource.mapOfPackages[currentPackageId]?.wordsAndInfo
+                var words = DataSource.mapOfPackages[currentPackageId]?.mapWordToCard
                 DataSource.mapOfPackages[currentPackageId] =
-                    paquetAttributes(name = newName, wordsAndInfo = words)
+                    paquetAttributes(name = newName, mapWordToCard = words)
                 _uiState.update { currentState ->
                     val updatedPaquets = currentState.paquets.toMutableMap()
                     updatedPaquets[currentPackageId] =
-                        paquetAttributes(name = newName, wordsAndInfo = words)
+                        paquetAttributes(name = newName, mapWordToCard = words)
                     currentState.copy(
                         paquets = updatedPaquets.toMap()
                     )
@@ -486,8 +493,37 @@ class AnoViewModel : ViewModel(){
             definitionOfTheWord(currentWord)
             addToHistory(word)
         }
+    ////////////////////////////////////////Logique de révision/////////////////////////////////////////
+    fun updateCurrentCard(){
+        currentCard = DataSource.mapOfPackages[currentPackageId]?.mapWordToCard?.get(currentWord)!!
+    }
+
+    fun onEncore(){
+        currentCard.onEncore()
+        wordToDisplayInAPackage()
+    }
+
+     fun onDifficile(){
+        currentCard.onDifficile()
+         wordToDisplayInAPackage()
+     }
+
+    fun onBien(){
+        currentCard.onBien()
+        wordToDisplayInAPackage()
+    }
+
+    fun onFacile(){
+        currentCard.onFacile()
+        wordToDisplayInAPackage()
+    }
+
+
 
 }
+
+
+
 
 
 

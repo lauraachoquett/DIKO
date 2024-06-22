@@ -311,7 +311,7 @@ fun AnoApp() {
             composable(route = AnoScreen.Favorites.name){
                 FavoritesScreen(
                     isFavorite = {viewModel.isWordInMyWords(it)},
-                    words = uiState.paquets[0]?.wordsAndInfo?.keys?.toList(),
+                    words = uiState.paquets[0]?.mapWordToCard?.keys?.toList(),
                     onFavoriteButtonClicked = { viewModel.onAddButtonClickedList(it)},
                     onWordClicked = { viewModel.onWordClicked(it)
                         navController.navigate(AnoScreen.Dictionary.name)})
@@ -350,8 +350,12 @@ fun AnoApp() {
                         wordInfos = viewModel.infoDefCurrentWord ,
                         wordToDisplayInAPackage = {viewModel.wordToDisplayInAPackage()},
                         onWordClicked = { viewModel.onWordClicked(it)
-                            navController.navigate(AnoScreen.Dictionary.name)})
-
+                            navController.navigate(AnoScreen.Dictionary.name)},
+                        onEncore = {viewModel.onEncore()},
+                        onBien = {viewModel.onBien()},
+                        onDifficle = {viewModel.onDifficile()},
+                        onFacile = {viewModel.onFacile()}
+                    )
                 }
             }
         }

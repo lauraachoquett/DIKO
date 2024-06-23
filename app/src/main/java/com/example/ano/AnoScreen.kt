@@ -348,13 +348,10 @@ fun AnoApp() {
                     LearningPackage(
                         word = viewModel.wordOnLearningPackageScreen,
                         wordInfos = viewModel.infoDefCurrentWord ,
-                        wordToDisplayInAPackage = {viewModel.wordToDisplayInAPackage()},
                         onWordClicked = { viewModel.onWordClicked(it)
                             navController.navigate(AnoScreen.Dictionary.name)},
-                        onEncore = {viewModel.onEncore()},
-                        onBien = {viewModel.onBien()},
-                        onDifficle = {viewModel.onDifficile()},
-                        onFacile = {viewModel.onFacile()}
+                        wordToDisplayInAPackage = {viewModel.wordToDisplayInAPackage(it)},
+
                     )
                 }
             }

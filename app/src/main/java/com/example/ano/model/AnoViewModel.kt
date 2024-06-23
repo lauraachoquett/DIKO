@@ -79,7 +79,7 @@ class AnoViewModel : ViewModel(){
     fun onPackageClicked(id: Int) {
         updateCurrentPackageId(id)
         if(packageIsNotEmpty()){
-            wordToDisplayInAPackage()
+            randomChoiceWordToDisplay()
         }
     }
 
@@ -124,7 +124,21 @@ class AnoViewModel : ViewModel(){
             return true
         }
     }
-    fun wordToDisplayInAPackage(){
+
+
+    fun wordToDisplayInAPackage(index : Int ){
+        // Appel de la fonction correspondant à l'index
+        when (index) {
+            0 -> onEncore()
+            1 -> onDifficile()
+            2 -> onBien()
+            3 -> onFacile()
+        }
+        randomChoiceWordToDisplay()
+    }
+
+    fun randomChoiceWordToDisplay(){
+        Log.d("wordError","nouveau mot !!!!")
         val paquetAttributes =uiState.value.paquets[currentPackageId]
         if (paquetAttributes != null) {
             if(paquetAttributes.mapWordToCard != null ){
@@ -499,23 +513,27 @@ class AnoViewModel : ViewModel(){
     }
 
     fun onEncore(){
+        Log.d("wordError","Encore nouveau mot !!!!")
+
         currentCard.onEncore()
-        wordToDisplayInAPackage()
     }
 
      fun onDifficile(){
-        currentCard.onDifficile()
-         wordToDisplayInAPackage()
+         Log.d("wordError","onDifficle nouveau mot !!!!")
+
+         currentCard.onDifficile()
      }
 
     fun onBien(){
+        Log.d("wordError","Bien nouveau mot !!!!")
+
         currentCard.onBien()
-        wordToDisplayInAPackage()
     }
 
     fun onFacile(){
+        Log.d("wordError","Facile nouveau mot !!!!")
+
         currentCard.onFacile()
-        wordToDisplayInAPackage()
     }
 
 

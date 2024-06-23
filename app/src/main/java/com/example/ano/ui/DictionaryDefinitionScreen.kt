@@ -211,20 +211,7 @@ fun DictionaryDefinitionScreen(
                         color = MaterialTheme.colorScheme.secondary,
                     )
                     Spacer(modifier = Modifier.weight(1f))
-                    IconButton(
-                        onClick = {
-                            //PackageModifierChoice=! PackageModifierChoice
-                        },
-                        enabled = isWordInAPackage,
-                        colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.primary)
 
-
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.round_check_circle_24 ),
-                            contentDescription = null,
-                        )
-                    }
                 }
 
                 Choice(

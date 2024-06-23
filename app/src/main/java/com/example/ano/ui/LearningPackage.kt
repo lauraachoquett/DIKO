@@ -43,12 +43,9 @@ import java.util.Locale
 fun LearningPackage(
    word:String,
    wordInfos: List<InformationWordByNature>,
-   wordToDisplayInAPackage : () -> Unit,
    onWordClicked :(String)->Unit,
-   onEncore : ()->Unit,
-   onDifficle :()->Unit,
-   onBien :()->Unit,
-   onFacile:()->Unit
+   wordToDisplayInAPackage : (Int)-> Unit,
+
 ) {
     var recto by remember { mutableStateOf(true) }
     Column(
@@ -124,7 +121,6 @@ fun LearningPackage(
             }
         }
         var options = listOf("Encore","Difficile", "Bien", "Facile")
-        var function = listOf(onEncore(),onDifficle(),onBien(),onFacile())
         var selectedIndex by remember { mutableIntStateOf(0) }
         if(!recto){
             Row(
@@ -139,7 +135,7 @@ fun LearningPackage(
                         onClick = {
                             selectedIndex = index
                             recto = true
-                            function[index]
+                            wordToDisplayInAPackage(index)
                         },
                         shape= MaterialTheme.shapes.small,
                         modifier = Modifier

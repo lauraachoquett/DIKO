@@ -1,5 +1,6 @@
 package com.example.ano.model
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -23,7 +24,7 @@ data class typeSelectedInfoForLearning (
     val definitionSelected : Map<String,Boolean>
 )
 
-class AnoViewModel : ViewModel(){
+class AnoViewModel() : ViewModel(){
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
@@ -56,10 +57,14 @@ class AnoViewModel : ViewModel(){
 
     lateinit var selectedPackage: MutableMap<Int,Boolean>
 
+    var nowMoreCardToShow : Boolean = true
+
+
     //Première clé : nature
     lateinit var selectedDefinitionByNature : MutableMap<String,typeSelectedInfoForLearning>
 
     lateinit var currentCard : AnoAnki.Card
+
 
     ///////////////////////////////////////////IdGenerator pour les paquets//////////////////////
 
@@ -79,7 +84,24 @@ class AnoViewModel : ViewModel(){
     fun onPackageClicked(id: Int) {
         updateCurrentPackageId(id)
         if(packageIsNotEmpty()){
-            randomChoiceWordToDisplay()
+            wordOnLearningPackageScreen = getNextReviewCard(currentPackageId)
+            Log.d("Anki","current word on package : $wordOnLearningPackageScreen")
+            var condition1 = (wordOnLearningPackageScreen != "")
+            Log.d("Anki","condition 1 : $condition1")
+            if (condition1 ) {
+                Log.d("Anki","not empty")
+                nowMoreCardToShow = false
+                infoDefCurrentWord = uiState.value.paquets[currentPackageId]?.mapWordToCard?.get(wordOnLearningPackageScreen)!!.wordAttributes.listInfoWordByNature!!
+                if (wordOnLearningPackageScreen != null) {
+                    updateCurrentWord(wordOnLearningPackageScreen)
+                }
+                Log.d("Anki","current word après le if : $currentWord")
+                updateCurrentCard()
+            }
+            else{
+                Log.d("Anki","empty")
+                nowMoreCardToShow = true
+            }
         }
     }
 
@@ -134,7 +156,59 @@ class AnoViewModel : ViewModel(){
             2 -> onBien()
             3 -> onFacile()
         }
-        randomChoiceWordToDisplay()
+        wordOnLearningPackageScreen = getNextReviewCard(currentPackageId)
+        Log.d("Anki","current word on package : $wordOnLearningPackageScreen")
+        var condition1 = wordOnLearningPackageScreen != ""
+        Log.d("Anki","condition 1 : $condition1")
+        if (condition1 ) {
+            Log.d("Anki","not empty")
+            nowMoreCardToShow = false
+            infoDefCurrentWord = uiState.value.paquets[currentPackageId]?.mapWordToCard?.get(wordOnLearningPackageScreen)!!.wordAttributes.listInfoWordByNature!!
+            if (wordOnLearningPackageScreen != null) {
+                updateCurrentWord(wordOnLearningPackageScreen)
+            }
+            Log.d("Anki","current word après le if : $currentWord")
+            updateCurrentCard()
+        }
+        else{
+            Log.d("Anki","empty")
+            nowMoreCardToShow = true
+        }
+    }
+
+    fun calculateDelayBeforeNextCard(){
+        AnoAnki.calculateDelayBeforeNextCard()
+    }
+
+    fun getNextReviewCard(packakeId: Int): String {
+        var print = AnoAnki.ReviewReceiver.reviewQueueMap[packakeId]
+        Log.d("Anki","current queue : $print")
+        var cond1 = isReviewQueueEmpty(packakeId) == false
+        Log.d("Anki","isReviewQueueNotEmpty $cond1")
+        if(cond1) {
+            var word =  AnoAnki.ReviewReceiver.reviewQueueMap[packakeId]!!.poll()
+            var wordStillInThePackage = uiState.value.paquets[currentPackageId]?.mapWordToCard?.containsKey(word) == true
+            if(wordStillInThePackage){
+                return word
+            }
+            else{
+                return ""
+            }
+        }
+        else{
+            return ""
+        }
+    }
+
+    fun isReviewQueueEmpty(packakeId: Int): Boolean? {
+        var size = AnoAnki.ReviewReceiver.reviewQueueMap[packakeId]?.size
+        Log.d("Anki","size queuemap : $size")
+        if (size != null) {
+            return size <= 0
+        }
+        else{
+            return true
+        }
     }
 
     fun randomChoiceWordToDisplay(){
@@ -259,7 +333,7 @@ class AnoViewModel : ViewModel(){
 
 
     //Cette fonction créer le type à mettre pour savoir quelles natures et quelles définitions ont été choisies
-    fun setIntrestingInfo(): AnoAnki.Card {
+    fun setIntrestingInfo(context: Context,id:Int): AnoAnki.Card {
         var listInfoWordByNature: MutableList<InformationWordByNature> = mutableListOf()
         var listOfDefinitions: MutableList<String>
         selectedDefinitionByNature?.forEach { (nature, value) ->
@@ -284,7 +358,7 @@ class AnoViewModel : ViewModel(){
                 }
             }
         }
-        var card = AnoAnki.Card(wordAttributes(listInfoWordByNature = listInfoWordByNature))
+        var card = AnoAnki.Card(wordAttributes(word = currentWord,listInfoWordByNature = listInfoWordByNature), context =context,id)
         return card
     }
 
@@ -296,14 +370,14 @@ class AnoViewModel : ViewModel(){
         return isAtLeastOneDefinitionSelected
     }
 
-    fun onConfirmationDefinition(){
+    fun onConfirmationDefinition(context: Context){
         Log.d("MyTag","Début de la fonction onConfirmationDefinition")
         _uiState.update { currentState->
             val updatedPaquets = currentState.paquets.toMutableMap()
             for(id in updatedPaquets.keys.toList()){
                 if(updatedPaquets[id]?.mapWordToCard?.keys?.toList()?.contains(currentWord) == true){
                     val newmapWordToCard = updatedPaquets[id]?.mapWordToCard?.toMutableMap()
-                    newmapWordToCard?.set(currentWord, setIntrestingInfo())
+                    newmapWordToCard?.set(currentWord, setIntrestingInfo(context,id))
                     val newpaquetAttributes = paquetAttributes(name = updatedPaquets[id]?.name, mapWordToCard =newmapWordToCard)
                     updatedPaquets[id]=newpaquetAttributes
                 }
@@ -339,7 +413,8 @@ class AnoViewModel : ViewModel(){
         }
     }
 
-    fun addWordToPackage(id: Int) {
+    fun addWordToPackage(id: Int,context: Context) {
+        Log.d("Anki","call addWordToPackage")
         _uiState.update { currentState ->
             val updatedPaquets = currentState.paquets.toMutableMap()
             //Ajout d'un mot dans un paquet s'il est selectionné
@@ -352,7 +427,7 @@ class AnoViewModel : ViewModel(){
                         val newMap = currentPackageAttributes.mapWordToCard?.toMutableMap()
 
                         mapOfWords[currentWord]?.infoWordByNature?.let {
-                            var card = AnoAnki.Card(wordAttributes(it))
+                            var card = AnoAnki.Card(wordAttributes(word = currentWord,listInfoWordByNature= it),context=context,id)
                             newMap!!.put(
                                 currentWord,
                                 card
@@ -370,23 +445,27 @@ class AnoViewModel : ViewModel(){
                 paquets = updatedPaquets.toMap()
             )
         }
+        AnoAnki.ReviewReceiver.addWordToReviewQueue(packageId = id,word = currentWord)
     }
 
 
-        fun addWordToPackages() {
+        fun addWordToPackages(context: Context) {
             for (id in selectedPackage.keys.toList()) {
                 //Ajout d'un mot dans un paquet s'il est selectionné
                 if (selectedPackage[id] == true) {
                     if (id == 0) {
-                        addToMyWords()
+                        addToMyWords(context)
                     }
-                    addWordToPackage(id)
+                    else{
+                        addWordToPackage(id,context)
+                    }
                 }
                 //Vérifie si le mot était dans les paquets non sélectionnés, si oui le supprime de ces paquets
                 else {
                     if (id == 0) {
                         deleteOfMyWords()
                     }
+
                     supressOrDoNothingPackage(id)
                 }
             }
@@ -427,19 +506,21 @@ class AnoViewModel : ViewModel(){
 
         ///////////////////////////////////////Bouton favoris ://///////////////////////////////////////
 
-        fun onAddButtonClickedList(word: String) {
+        fun onAddButtonClickedList(word: String,context: Context) {
             updateCurrentWord(word)
             if (isWordInMyWords(currentWord)) {
                 return deleteOfMyWords()
             } else {
-                addToMyWords()
+                addToMyWords(context)
             }
 
         }
 
-        private fun addToMyWords() {
+        private fun addToMyWords(context: Context) {
+            Log.d("Anki","call addToMyWords")
             mapOfWords[currentWord]?.isFavorite = true
-            addWordToPackage(0)
+            addWordToPackage(0,context)
+
         }
 
 
@@ -514,13 +595,11 @@ class AnoViewModel : ViewModel(){
 
     fun onEncore(){
         Log.d("wordError","Encore nouveau mot !!!!")
-
         currentCard.onEncore()
     }
 
      fun onDifficile(){
          Log.d("wordError","onDifficle nouveau mot !!!!")
-
          currentCard.onDifficile()
      }
 
@@ -535,6 +614,8 @@ class AnoViewModel : ViewModel(){
 
         currentCard.onFacile()
     }
+
+
 
 
 

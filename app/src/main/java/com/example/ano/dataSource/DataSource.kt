@@ -30,6 +30,7 @@ data class InformationWordByNatureAndFavorite(
 )
 
 data class wordAttributes(
+    var word : String,
     var listInfoWordByNature: List<InformationWordByNature>?,
     var delay: Long = 60 * 1000L, // Default delay in milliseconds
     var ease: Double = 2.5
@@ -81,8 +82,8 @@ object DataSource {
 
             var wordsAndInfoMyWords : MutableMap<String,AnoAnki.Card>? = mutableMapOf()
             wordsAndInfoFavorites.keys.forEach{ word ->
-                var wordAttributes = wordAttributes(listInfoWordByNature = wordsAndInfoFavorites[word])
-                var card = AnoAnki.Card(wordAttributes)
+                var wordAttributes = wordAttributes(word = word,listInfoWordByNature = wordsAndInfoFavorites[word])
+                var card = AnoAnki.Card(wordAttributes,context,0)
                 wordsAndInfoMyWords?.put(word,card)
             }
 
@@ -133,8 +134,8 @@ object DataSource {
                     val nameOfPackage = sharedPreferences.getString("nameOfPackage_$it", null)
                     var wordsAndInfoPackage : MutableMap<String,AnoAnki.Card>? = mutableMapOf()
                     wordsAndInfo.keys.forEach{ word ->
-                        var wordAttributes = wordAttributes(listInfoWordByNature = wordsAndInfo[word])
-                        var card = AnoAnki.Card(wordAttributes)
+                        var wordAttributes = wordAttributes(word = word,listInfoWordByNature = wordsAndInfo[word])
+                        var card = AnoAnki.Card(wordAttributes,context,it.toInt())
                         wordsAndInfoPackage?.put(word,card)
                     }
                     paquetAttributes(mapWordToCard = wordsAndInfoPackage, name = nameOfPackage)

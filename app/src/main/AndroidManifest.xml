@@ -19,10 +19,16 @@
             android:theme="@style/Theme.Ano">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Déclaration de ReviewReceiver -->
+        <receiver android:name="com.example.ano.model.AnoAnki$ReviewReceiver" android:exported="true"/>
+
     </application>
+
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.SET_ALARM"/>
 
 </manifest>

@@ -30,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -38,6 +39,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.ano.model.AnoAnki
 import com.example.ano.model.AnoViewModel
 import com.example.ano.ui.DialogChoice
 import com.example.ano.ui.DictionaryDefinitionScreen
@@ -46,6 +48,7 @@ import com.example.ano.ui.FavoritesScreen
 import com.example.ano.ui.HistoryScreen
 import com.example.ano.ui.HomePageScreen
 import com.example.ano.ui.LearningPackage
+import com.example.ano.ui.LearningPackageEmpty
 import com.example.ano.ui.ListOfPackagesScreen
 import com.example.readinggoals.ui.theme.Barlow
 
@@ -69,7 +72,7 @@ fun AnoAppBar(
     newPackageName : String,
     onUserModificationdChanged: (String) -> Unit,
     onModifyName : ()->Unit,
-    CloseClicked:()->Unit,
+    CloseClicked :()->Unit,
     onDeleteWordClicked:()->Unit,
     onDeleteClicked : ()->Unit,
     canNavigateBack: Boolean,
@@ -123,32 +126,49 @@ fun AnoAppBar(
                 }
             }
             DropdownMenu(expanded = expanded, onDismissRequest = { expanded =false }) {
-                if(packageName != "Mes mots"){
-                    DropdownMenuItem(
-                        text = {Text(text ="Supprimer ce paquet")} ,
-                        onClick = {
-                            onDeleteClicked()
-                            navigateUp()
-                            expanded =false
+                DropdownMenuItem(
+                    text = { Text(text="Supprimer ce mot du paquet")},
+                    onClick = {
+                        onDeleteWordClicked()
+                        expanded =false
+                    },
+                    leadingIcon = {
+                        IconButton(
+                            onClick = {
+                                onDeleteWordClicked()
+                                expanded =false
+                            },
+                            colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.primary)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Clear,
+                                contentDescription = "Supprimer ce mot du paquet",
+                            )
                         }
-                        ,
-                        leadingIcon = {
-                            IconButton(
-                                onClick = {
-                                    onDeleteClicked()
-                                    navigateUp()
-                                    expanded =false
-                                },
-                                colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.primary)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Delete,
-                                    contentDescription = "Delete",
-                                )
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text="Afficher la liste de mots")},
+                    onClick = {
 
-                            }
+                        expanded =false
+                    },
+                    leadingIcon = {
+                        IconButton(
+                            onClick = {
+                                onDeleteWordClicked()
+                                expanded =false
+                            },
+                            colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.primary)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Clear,
+                                contentDescription = "Supprimer ce mot du paquet",
+                            )
                         }
-                    )
+                    }
+                )
+                if(packageName != "Mes mots"){
                     DropdownMenuItem(
                         text = { Text(text="Modifier le nom du paquet")},
                         onClick = {
@@ -171,23 +191,27 @@ fun AnoAppBar(
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text(text="Supprimer ce mot du paquet")},
+                        text = {Text(text ="Supprimer ce paquet")} ,
                         onClick = {
-                            onDeleteWordClicked()
+                            onDeleteClicked()
+                            navigateUp()
                             expanded =false
-                        },
+                        }
+                        ,
                         leadingIcon = {
                             IconButton(
                                 onClick = {
-                                    onDeleteWordClicked()
+                                    onDeleteClicked()
+                                    navigateUp()
                                     expanded =false
                                 },
                                 colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.primary)
                             ) {
                                 Icon(
-                                    imageVector = Icons.Rounded.Clear,
-                                    contentDescription = "Supprimer ce mot du paquet",
+                                    imageVector = Icons.Rounded.Delete,
+                                    contentDescription = "Delete",
                                 )
+
                             }
                         }
                     )
@@ -218,7 +242,6 @@ fun AnoAppBar(
 }
 
 
-
 @SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -232,6 +255,7 @@ fun AnoApp() {
     val currentScreen = AnoScreen.valueOf(
         backStackEntry?.destination?.route ?: AnoScreen.Homepage.name
     )
+    val context = LocalContext.current
 
     var scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val uiState by viewModel.uiState.collectAsState()
@@ -297,11 +321,11 @@ fun AnoApp() {
                     paquets = uiState.paquets,
                     selectedPackage = viewModel.selectedPackage,
                     onCheckedClickedPackage = {viewModel.onCheckedClickedPackage(it)},
-                    addWordToPackages = { viewModel.addWordToPackages() },
+                    addWordToPackages = { viewModel.addWordToPackages(context.applicationContext) },
                     selectedDefinitionAndNature = viewModel.selectedDefinitionByNature,
                     onCheckedDefinition = { it1, it2 -> viewModel.onCheckedDefinition(it1, it2) },
                     onConfirmationDefinition = {
-                        viewModel.onConfirmationDefinition()
+                        viewModel.onConfirmationDefinition(context.applicationContext)
                         viewModel.initSelectedDefintion()
                     },
                     isThereAnyDefinitionSelected ={viewModel.isThereAnyDefinitionSelected()}
@@ -312,7 +336,7 @@ fun AnoApp() {
                 FavoritesScreen(
                     isFavorite = {viewModel.isWordInMyWords(it)},
                     words = uiState.paquets[0]?.mapWordToCard?.keys?.toList(),
-                    onFavoriteButtonClicked = { viewModel.onAddButtonClickedList(it)},
+                    onFavoriteButtonClicked = { viewModel.onAddButtonClickedList(it,context=context.applicationContext)},
                     onWordClicked = { viewModel.onWordClicked(it)
                         navController.navigate(AnoScreen.Dictionary.name)})
             }
@@ -320,7 +344,7 @@ fun AnoApp() {
                 HistoryScreen(
                     isFavorite = {viewModel.isWordInMyWords(it)},
                     words = uiState.wordsInHistory,
-                    onFavoriteButtonClicked = { viewModel.onAddButtonClickedList(it)},
+                    onFavoriteButtonClicked = { viewModel.onAddButtonClickedList(it,context=context.applicationContext)},
                     onWordClicked = { viewModel.onWordClicked(it)
                         navController.navigate(AnoScreen.Dictionary.name)}
                 )
@@ -345,14 +369,19 @@ fun AnoApp() {
             }
             composable(route = AnoScreen.LearningPackage.name){
                     scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-                    LearningPackage(
-                        word = viewModel.wordOnLearningPackageScreen,
-                        wordInfos = viewModel.infoDefCurrentWord ,
-                        onWordClicked = { viewModel.onWordClicked(it)
-                            navController.navigate(AnoScreen.Dictionary.name)},
-                        wordToDisplayInAPackage = {viewModel.wordToDisplayInAPackage(it)},
-
-                    )
+                    if(viewModel.nowMoreCardToShow){
+                        viewModel.calculateDelayBeforeNextCard()
+                        LearningPackageEmpty(AnoAnki.delayBeforeNextCard)
+                    }
+                    else{
+                        LearningPackage(
+                            word = viewModel.wordOnLearningPackageScreen,
+                            wordInfos = viewModel.infoDefCurrentWord ,
+                            onWordClicked = { viewModel.onWordClicked(it)
+                                navController.navigate(AnoScreen.Dictionary.name)},
+                            wordToDisplayInAPackage = {viewModel.wordToDisplayInAPackage(it)},
+                        )
+                    }
                 }
             }
         }

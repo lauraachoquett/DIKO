@@ -45,8 +45,8 @@ fun LearningPackage(
    wordInfos: List<InformationWordByNature>,
    onWordClicked :(String)->Unit,
    wordToDisplayInAPackage : (Int)-> Unit,
-
 ) {
+
     var recto by remember { mutableStateOf(true) }
     Column(
         modifier = Modifier.fillMaxSize()
@@ -133,9 +133,9 @@ fun LearningPackage(
                 options.forEachIndexed { index, label ->
                     Button(
                         onClick = {
+                            wordToDisplayInAPackage(index)
                             selectedIndex = index
                             recto = true
-                            wordToDisplayInAPackage(index)
                         },
                         shape= MaterialTheme.shapes.small,
                         modifier = Modifier

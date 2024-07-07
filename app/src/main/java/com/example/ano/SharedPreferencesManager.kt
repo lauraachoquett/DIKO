@@ -1,9 +1,11 @@
 package com.example.ano
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.util.Log
 import com.example.ano.dataSource.DataSource
 import com.example.ano.dataSource.DataSource.listFavorites
 import com.example.ano.dataSource.DataSource.listHistory
+import com.example.ano.model.AnoAnki
 import com.example.ano.model.AnoViewModel.IdGenerator.currentId
 
 object SharedPreferencesManager {
@@ -74,12 +76,37 @@ object SharedPreferencesManager {
         editor.apply()
     }
 
+    fun saveQueueMap(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("ReviewQueuePrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        AnoAnki.ReviewReceiver.reviewQueueMap.forEach { (key, queue) ->
+            editor.putStringSet(key.toString(), queue.toSet())
+        }
+        editor.apply()
+    }
+
     // Sauvegarder l'état de currentId dans les préférences partagées
     fun saveCurrentId(context: Context) {
         val sharedPreferences = context.getSharedPreferences("IdGeneratorPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putInt("currentId", currentId)
         editor.apply()
+    }
+
+    fun saveDelay(context : Context){
+        val sharedPreferences = context.getSharedPreferences("DelayPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val listOfIdPackages = AnoAnki.currentTimeOfTheLastUpdateByPackage.keys.joinToString(separator = separator)
+        editor.putString("idOfPackages", listOfIdPackages)
+        AnoAnki.currentTimeOfTheLastUpdateByPackage.forEach{(id,delay)->
+            editor.putString("lastupdate_$id",delay.toString())
+        }
+        AnoAnki.minDelayCardByPackage.forEach{(id,delay)->
+            editor.putString("mindelay_$id",delay.toString())
+        }
+        editor.apply()
+
     }
 
     // Charger l'état de currentId à partir des préférences partagées

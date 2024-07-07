@@ -13,24 +13,43 @@ import java.util.Queue
 
 class AnoAnki {
     companion object{
-        var currentTimeOfTheLastUpdate : Long = 0L
-        var delayBeforeNextCard : Long = 0L
-        var minDelayCard : Long = ReviewTime.LONG_TERM.delayInMillis
+        val delimiters = "///"
+        var currentTimeOfTheLastUpdateByPackage :  MutableMap<Int,Long?> = mutableMapOf()
+        var delayBeforeNextCardByPackage :  MutableMap<Int,Long?> = mutableMapOf()
+        var minDelayCardByPackage :  MutableMap<Int,Long?> = mutableMapOf()
 
-        fun updateLastUpdate(currentTime : Long){
-            currentTimeOfTheLastUpdate = currentTime
+        fun updateLastUpdate(currentTime : Long,id : Int){
+            currentTimeOfTheLastUpdateByPackage[id] = currentTime
         }
 
-        fun updateMinDelayCard(delay : Long){
-            if (delay< minDelayCard){
-                minDelayCard=delay
+        fun updateMinDelayCard(delay : Long, id: Int){
+            minDelayCardByPackage[id] = ReviewTime.LONG_TERM.delayInMillis
+            if (delay< minDelayCardByPackage[id]!!){
+                minDelayCardByPackage[id]=delay
             }
         }
 
-        fun calculateDelayBeforeNextCard() {
-            delayBeforeNextCard = -(System.currentTimeMillis() - currentTimeOfTheLastUpdate - minDelayCard)
-
+        fun calculateDelayBeforeNextCard(id : Int) {
+            delayBeforeNextCardByPackage[id] = -(System.currentTimeMillis() - currentTimeOfTheLastUpdateByPackage[id]!! - minDelayCardByPackage[id]!!)
         }
+
+
+        fun restoreDelay(context: Context) {
+            val sharedPreferences = context.getSharedPreferences("DelayPrefs", Context.MODE_PRIVATE)
+            val idOfPackages = sharedPreferences.getString("idOfPackages",null)
+            val listOfIdPackages = idOfPackages?.split(delimiters)?.toMutableList() ?: mutableListOf()
+            currentTimeOfTheLastUpdateByPackage = listOfIdPackages.associateBy(
+                { it.toInt() },
+                {sharedPreferences.getString("lastupdate_$it",null)?.toLong()}
+                ).toMutableMap()
+
+            minDelayCardByPackage = listOfIdPackages.associateBy(
+                { it.toInt() },
+                {sharedPreferences.getString("mindelay_$it",null)?.toLong()}
+            ).toMutableMap()
+        }
+
+
     }
 
     enum class ReviewTime(val delayInMillis: Long){
@@ -68,6 +87,7 @@ class AnoAnki {
         }
 
         override fun onFacile() {
+            card.delay = ReviewTime.SHORT_TERM.delayInMillis
             card.state = ReviewCard(card, packageId)
             card.scheduleNextReview(card.delay, packageId)
         }
@@ -169,8 +189,8 @@ class AnoAnki {
                 0 // Pas besoin de spécifier pour les versions antérieures à S
             }
             val pendingIntent = PendingIntent.getBroadcast(this.context, this.wordAttributes.word.hashCode(), intent, flags)
-            updateLastUpdate(System.currentTimeMillis())
-            updateMinDelayCard(delayInMillis)
+            updateLastUpdate(System.currentTimeMillis(),packageId)
+            updateMinDelayCard(delayInMillis,packageId)
             val triggerAtMillis = System.currentTimeMillis() + delayInMillis
             Log.d("Anki","delay:  $delayInMillis")
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
@@ -186,10 +206,57 @@ class AnoAnki {
 
             fun addWordToReviewQueue(packageId: Int, word: String) {
                 val queue = reviewQueueMap.getOrPut(packageId) { LinkedList() }
-                queue.add(word)
-                Log.d("ReviewReceiver", "Manually added word: $word to packageId: $packageId")
-                Log.d("ReviewReceiver", "Updated reviewQueueMap: $reviewQueueMap")
+                if(!queue.contains(word)){
+                    queue.add(word)
+                    Log.d("ReviewReceiver", "Manually added word: $word to packageId: $packageId")
+                    Log.d("ReviewReceiver", "Updated reviewQueueMap: $reviewQueueMap")
+                }
+
             }
+
+            fun deleteWord(packageId : Int, word : String){
+                val queue = reviewQueueMap.getOrPut(packageId) { LinkedList() }
+                if(queue.contains(word)){
+                    queue.remove(word)
+                }
+            }
+
+            fun restoreReviewQueueMap(context: Context) {
+                val sharedPreferences = context.getSharedPreferences("ReviewQueuePrefs", Context.MODE_PRIVATE)
+                val allEntries = sharedPreferences.all
+
+                // Vérifier si les SharedPreferences sont vides
+                if (allEntries.isEmpty()) {
+                    Log.d("ReviewQueueMap", "Aucune donnée à restaurer.")
+                    return
+                }
+
+                allEntries.forEach { (key, value) ->
+                    try {
+                        if (value is Set<*>) {
+                            // Log pour vérifier le type de valeur
+                            Log.d("ReviewQueueMap", "Clé: $key, Valeur: $value")
+
+                            // Convertir la valeur en LinkedList<String>
+                            val queue = LinkedList<String>(value.map { it.toString() })
+
+                            // Vérifier et convertir la clé en Int
+                            val packageId = key.toIntOrNull()
+                            if (packageId != null && !(queue.isEmpty())) {
+                                reviewQueueMap[packageId] = queue
+                                Log.d("ReviewQueueMap", "Restauré: $packageId -> $queue")
+                            } else {
+                                Log.e("ReviewQueueMap", "Clé invalide (non convertible en Int): $key")
+                            }
+                        } else {
+                            Log.e("ReviewQueueMap", "Valeur non attendue pour la clé: $key, type: ${value?.javaClass?.name}")
+                        }
+                    } catch (e: Exception) {
+                        Log.e("ReviewQueueMap", "Erreur lors de la restauration de la clé $key: ${e.message}")
+                    }
+                }
+            }
+
         }
 
         override fun onReceive(context: Context, intent: Intent) {

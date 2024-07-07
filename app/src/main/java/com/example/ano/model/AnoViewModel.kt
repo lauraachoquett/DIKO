@@ -166,9 +166,9 @@ class AnoViewModel() : ViewModel(){
             infoDefCurrentWord = uiState.value.paquets[currentPackageId]?.mapWordToCard?.get(wordOnLearningPackageScreen)!!.wordAttributes.listInfoWordByNature!!
             if (wordOnLearningPackageScreen != null) {
                 updateCurrentWord(wordOnLearningPackageScreen)
+                updateCurrentCard()
             }
             Log.d("Anki","current word après le if : $currentWord")
-            updateCurrentCard()
         }
         else{
             Log.d("Anki","empty")
@@ -177,7 +177,7 @@ class AnoViewModel() : ViewModel(){
     }
 
     fun calculateDelayBeforeNextCard(){
-        AnoAnki.calculateDelayBeforeNextCard()
+        AnoAnki.calculateDelayBeforeNextCard(currentPackageId)
     }
 
     fun getNextReviewCard(packakeId: Int): String {
@@ -465,7 +465,7 @@ class AnoViewModel() : ViewModel(){
                     if (id == 0) {
                         deleteOfMyWords()
                     }
-
+                    AnoAnki.ReviewReceiver.deleteWord(id,currentWord)
                     supressOrDoNothingPackage(id)
                 }
             }
@@ -590,6 +590,8 @@ class AnoViewModel() : ViewModel(){
         }
     ////////////////////////////////////////Logique de révision/////////////////////////////////////////
     fun updateCurrentCard(){
+        Log.d("wordError","current word before update card $currentWord")
+
         currentCard = DataSource.mapOfPackages[currentPackageId]?.mapWordToCard?.get(currentWord)!!
     }
 

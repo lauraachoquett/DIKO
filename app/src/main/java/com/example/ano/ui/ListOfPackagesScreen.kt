@@ -48,6 +48,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -62,6 +63,7 @@ import com.example.readinggoals.ui.theme.Barlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.Locale
+import java.util.Queue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +76,8 @@ fun ListOfPackagesScreen(
     CloseClicked:()->Unit,
     onDeleteClicked : ()->Unit,
     onModifyName : ()->Unit,
-    onLongClick: (Int) -> Unit
+    onLongClick: (Int) -> Unit,
+    reviewQueueMap : MutableMap<Int, Queue<String>>
 ){
     var addClicked by remember { mutableStateOf(false) }
     var modifyClicked by remember { mutableStateOf(false) }
@@ -146,6 +149,7 @@ fun ListOfPackagesScreen(
                         id = id,
                         name = paquets[id]?.name,
                         size = paquets[id]?.mapWordToCard?.size,
+                        wordInQueue = reviewQueueMap[id]?.size,
                         onPackageClicked = onPackageClicked,
                         modifier = Modifier.padding(innerPadding),
                         onLongClick = {
@@ -358,11 +362,16 @@ fun Element(
     id : Int,
     name: String?,
     size: Int?,
+    wordInQueue : Int?,
     onPackageClicked: (Int) -> Unit,
     onLongClick: (Int)->Unit,
     modifier: Modifier = Modifier
 ){
     var size = size
+    var wordInQueue = wordInQueue
+    if (wordInQueue==null){
+        wordInQueue=0
+    }
     if(size==null){
         size = 0
     }
@@ -407,12 +416,22 @@ fun Element(
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
+                text = "$wordInQueue",
+                fontWeight = FontWeight.Normal,
+                color = Color.Red,
+                fontSize = 20.sp,
+                lineHeight = 24.sp,
+                letterSpacing = 0.5.sp,
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
                 text = "$size",
                 fontWeight = FontWeight.Normal,
                 fontSize = 20.sp,
                 lineHeight = 24.sp,
                 letterSpacing = 0.5.sp,
             )
+
         }
     }
 }

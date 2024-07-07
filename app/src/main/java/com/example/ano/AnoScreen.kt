@@ -364,14 +364,19 @@ fun AnoApp() {
                     CloseClicked = {viewModel.reinitNewPackageName()},
                     onDeleteClicked = {viewModel.deleteAPackage()},
                     onModifyName = {viewModel.changePackageName()},
-                    onLongClick = {viewModel.onLongClickedPackage(it)}
+                    onLongClick = {viewModel.onLongClickedPackage(it)},
+                    reviewQueueMap = AnoAnki.ReviewReceiver.reviewQueueMap
                 )
             }
             composable(route = AnoScreen.LearningPackage.name){
                     scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
                     if(viewModel.nowMoreCardToShow){
                         viewModel.calculateDelayBeforeNextCard()
-                        LearningPackageEmpty(AnoAnki.delayBeforeNextCard)
+                        AnoAnki.delayBeforeNextCardByPackage[viewModel.currentPackageId]?.let { it1 ->
+                            LearningPackageEmpty(
+                                it1
+                            )
+                        }
                     }
                     else{
                         LearningPackage(

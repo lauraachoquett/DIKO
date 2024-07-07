@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.ano.dataSource.DataSource
+import com.example.ano.model.AnoAnki
 import com.example.compose.AnoTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,6 +23,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     DataSource.loadJSONFromRaw(this@MainActivity, R.raw.donnees6)
                     DataSource.loadCurrentId(this@MainActivity)
+                    AnoAnki.ReviewReceiver.restoreReviewQueueMap(this)
+                    AnoAnki.restoreDelay(this)
                     AnoApp()
 
 
@@ -36,6 +39,8 @@ class MainActivity : ComponentActivity() {
         SharedPreferencesManager.saveHistoryListAndFavoriteList(this)
         SharedPreferencesManager.savePackages(this)
         SharedPreferencesManager.saveCurrentId(this)
+        SharedPreferencesManager.saveQueueMap(this)
+        SharedPreferencesManager.saveDelay(this)
     }
     override fun onStop(){
         super.onStop()
@@ -43,6 +48,9 @@ class MainActivity : ComponentActivity() {
         SharedPreferencesManager.saveHistoryListAndFavoriteList(this)
         SharedPreferencesManager.savePackages(this)
         SharedPreferencesManager.saveCurrentId(this)
+        SharedPreferencesManager.saveQueueMap(this)
+        SharedPreferencesManager.saveDelay(this)
+
 
     }
 }

@@ -77,6 +77,7 @@ fun ListOfPackagesScreen(
     onDeleteClicked : ()->Unit,
     onModifyName : ()->Unit,
     onLongClick: (Int) -> Unit,
+    onListOfWords:()->Unit,
     reviewQueueMap : MutableMap<Int, Queue<String>>
 ){
     var addClicked by remember { mutableStateOf(false) }
@@ -87,7 +88,7 @@ fun ListOfPackagesScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    if(paquets == null){
+    if(paquets.isNullOrEmpty()){
         Text(text = "Créer ton premier paquet ! ")
     }
     else {
@@ -138,7 +139,8 @@ fun ListOfPackagesScreen(
                             }
                         }
                         showBottomSheet = false
-                    }
+                    },
+                    onListOfWords = onListOfWords
                 )
             }
             LazyColumn(
@@ -204,7 +206,8 @@ fun ModalBottomSheetDisplay(
     onDismissRequest: () -> Unit,
     hideModalBottomSheet : ()->Unit,
     onModifyClicked : ()->Unit,
-    onDeleteClicked : ()->Unit
+    onDeleteClicked : ()->Unit,
+    onListOfWords : () -> Unit
 ){
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
@@ -225,6 +228,12 @@ fun ModalBottomSheetDisplay(
                 onClick =onDeleteClicked,
                 idIcon = R.drawable.round_delete_24
             )
+            actionForBottomSheet(
+                text = "Afficher la liste de mots",
+                onClick =onListOfWords,
+                idIcon = R.drawable.baseline_format_list_bulleted_24
+            )
+
         }
     }
 }

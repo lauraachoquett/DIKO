@@ -10,5 +10,6 @@
     <string name="paquet">Paquets</string>
     <string name="learningPackage">Mes mots</string>
     <string name="namePackage">Nom du paquet</string>
+    <string name="listWordsPackage">Mots dans ce paquet</string>
 
 </resources>

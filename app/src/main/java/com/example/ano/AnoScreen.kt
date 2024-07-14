@@ -8,6 +8,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.List
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
@@ -35,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -50,6 +52,7 @@ import com.example.ano.ui.HomePageScreen
 import com.example.ano.ui.LearningPackage
 import com.example.ano.ui.LearningPackageEmpty
 import com.example.ano.ui.ListOfPackagesScreen
+import com.example.ano.ui.ListOfWordsInAPackage
 import com.example.readinggoals.ui.theme.Barlow
 
 
@@ -60,15 +63,19 @@ enum class AnoScreen(@StringRes val title :Int ){
     Favorites(title= R.string.favorites),
     History(title= R.string.histrory),
     ListOfPackage(title=R.string.paquet),
-    LearningPackage(title = R.string.learningPackage)
+    LearningPackage(title = R.string.learningPackage),
+    ListOfWordsInAPackage(title=R.string.listWordsPackage)
 }
 
 // TODO: AppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AnoAppBar(
+    navController: NavController,
     currentScreen: AnoScreen,
     packageName : String?,
+
+
     newPackageName : String,
     onUserModificationdChanged: (String) -> Unit,
     onModifyName : ()->Unit,
@@ -78,13 +85,14 @@ fun AnoAppBar(
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     scrollBehavior : TopAppBarScrollBehavior,
+    addWordToQueue : () -> Unit,
     modifier: Modifier = Modifier
 ){
     var expanded by remember { mutableStateOf(false) }
     var modifyClicked by remember { mutableStateOf(false) }
 
     var title= stringResource(id = currentScreen.title)
-    if(currentScreen.title == R.string.learningPackage){
+    if(currentScreen.title == R.string.learningPackage || currentScreen.title==R.string.listWordsPackage){
         if (packageName != null) {
             title = packageName
         }
@@ -103,7 +111,10 @@ fun AnoAppBar(
         navigationIcon = {
             if(canNavigateBack){
                 IconButton(
-                    onClick = navigateUp,
+                    onClick = {
+                        addWordToQueue()
+                        navigateUp()
+                    },
                     colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.primary)
                 ) {
                     Icon(
@@ -125,7 +136,31 @@ fun AnoAppBar(
                     )
                 }
             }
-            DropdownMenu(expanded = expanded, onDismissRequest = { expanded =false }) {
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded =false }
+            ) {
+                DropdownMenuItem(
+                    text = { Text(text="Afficher la liste de mots")},
+                    onClick = {
+                        navController.navigate(AnoScreen.ListOfWordsInAPackage.name)
+                        expanded =false
+                    },
+                    leadingIcon = {
+                        IconButton(
+                            onClick = {
+                                navController.navigate(AnoScreen.ListOfWordsInAPackage.name)
+                                expanded =false
+                            },
+                            colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.primary)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.List,
+                                contentDescription = "Supprimer ce mot du paquet",
+                            )
+                        }
+                    }
+                )
                 DropdownMenuItem(
                     text = { Text(text="Supprimer ce mot du paquet")},
                     onClick = {
@@ -147,27 +182,7 @@ fun AnoAppBar(
                         }
                     }
                 )
-                DropdownMenuItem(
-                    text = { Text(text="Afficher la liste de mots")},
-                    onClick = {
 
-                        expanded =false
-                    },
-                    leadingIcon = {
-                        IconButton(
-                            onClick = {
-                                onDeleteWordClicked()
-                                expanded =false
-                            },
-                            colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.primary)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Rounded.Clear,
-                                contentDescription = "Supprimer ce mot du paquet",
-                            )
-                        }
-                    }
-                )
                 if(packageName != "Mes mots"){
                     DropdownMenuItem(
                         text = { Text(text="Modifier le nom du paquet")},
@@ -259,11 +274,11 @@ fun AnoApp() {
 
     var scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val uiState by viewModel.uiState.collectAsState()
-
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             AnoAppBar(
+                navController = navController,
                 currentScreen = currentScreen,
                 newPackageName = viewModel.newPackageName,
                 onUserModificationdChanged ={
@@ -276,7 +291,9 @@ fun AnoApp() {
                 packageName = uiState.paquets[viewModel.currentPackageId]?.name,
                 scrollBehavior=scrollBehavior,
                 canNavigateBack = navController.previousBackStackEntry !=null,
-                navigateUp = { navController.navigateUp() })
+                navigateUp = { navController.navigateUp() },
+                addWordToQueue = {viewModel.addWordToReviewQueueMap()}
+            )
         }
     ) { innerPadding ->
         NavHost(
@@ -365,7 +382,8 @@ fun AnoApp() {
                     onDeleteClicked = {viewModel.deleteAPackage()},
                     onModifyName = {viewModel.changePackageName()},
                     onLongClick = {viewModel.onLongClickedPackage(it)},
-                    reviewQueueMap = AnoAnki.ReviewReceiver.reviewQueueMap
+                    reviewQueueMap = AnoAnki.ReviewReceiver.reviewQueueMap,
+                    onListOfWords = {navController.navigate(AnoScreen.ListOfWordsInAPackage.name)}
                 )
             }
             composable(route = AnoScreen.LearningPackage.name){
@@ -387,10 +405,20 @@ fun AnoApp() {
                             wordToDisplayInAPackage = {viewModel.wordToDisplayInAPackage(it)},
                         )
                     }
-                }
             }
+            composable(route = AnoScreen.ListOfWordsInAPackage.name){
+                ListOfWordsInAPackage(
+                    isFavorite = {viewModel.isWordInMyWords(it)},
+                    words = uiState.paquets[viewModel.currentPackageId]?.mapWordToCard?.keys?.toList(),
+                    onFavoriteButtonClicked = { viewModel.onAddButtonClickedList(it,context=context.applicationContext)},
+                    onWordClicked = { viewModel.onWordClicked(it)
+                        navController.navigate(AnoScreen.Dictionary.name)})
+            }
+
+
         }
     }
+}
 
 
 

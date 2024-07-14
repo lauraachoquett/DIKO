@@ -85,21 +85,16 @@ class AnoViewModel() : ViewModel(){
         updateCurrentPackageId(id)
         if(packageIsNotEmpty()){
             wordOnLearningPackageScreen = getNextReviewCard(currentPackageId)
-            Log.d("Anki","current word on package : $wordOnLearningPackageScreen")
             var condition1 = (wordOnLearningPackageScreen != "")
-            Log.d("Anki","condition 1 : $condition1")
             if (condition1 ) {
-                Log.d("Anki","not empty")
                 nowMoreCardToShow = false
                 infoDefCurrentWord = uiState.value.paquets[currentPackageId]?.mapWordToCard?.get(wordOnLearningPackageScreen)!!.wordAttributes.listInfoWordByNature!!
                 if (wordOnLearningPackageScreen != null) {
                     updateCurrentWord(wordOnLearningPackageScreen)
                 }
-                Log.d("Anki","current word après le if : $currentWord")
                 updateCurrentCard()
             }
             else{
-                Log.d("Anki","empty")
                 nowMoreCardToShow = true
             }
         }
@@ -155,6 +150,7 @@ class AnoViewModel() : ViewModel(){
             1 -> onDifficile()
             2 -> onBien()
             3 -> onFacile()
+
         }
         wordOnLearningPackageScreen = getNextReviewCard(currentPackageId)
         Log.d("Anki","current word on package : $wordOnLearningPackageScreen")
@@ -164,10 +160,8 @@ class AnoViewModel() : ViewModel(){
             Log.d("Anki","not empty")
             nowMoreCardToShow = false
             infoDefCurrentWord = uiState.value.paquets[currentPackageId]?.mapWordToCard?.get(wordOnLearningPackageScreen)!!.wordAttributes.listInfoWordByNature!!
-            if (wordOnLearningPackageScreen != null) {
-                updateCurrentWord(wordOnLearningPackageScreen)
-                updateCurrentCard()
-            }
+            updateCurrentWord(wordOnLearningPackageScreen)
+            updateCurrentCard()
             Log.d("Anki","current word après le if : $currentWord")
         }
         else{
@@ -176,27 +170,34 @@ class AnoViewModel() : ViewModel(){
         }
     }
 
+    fun addWordToReviewQueueMap(){
+        if (nowMoreCardToShow){
+            return
+        }
+        else{
+            AnoAnki.ReviewReceiver.addWordToReviewQueue(currentPackageId,currentWord)
+        }
+    }
+
     fun calculateDelayBeforeNextCard(){
         AnoAnki.calculateDelayBeforeNextCard(currentPackageId)
     }
 
     fun getNextReviewCard(packakeId: Int): String {
-        var print = AnoAnki.ReviewReceiver.reviewQueueMap[packakeId]
+        val print = AnoAnki.ReviewReceiver.reviewQueueMap[packakeId]
         Log.d("Anki","current queue : $print")
-        var cond1 = isReviewQueueEmpty(packakeId) == false
+        val cond1 = isReviewQueueEmpty(packakeId) == false
         Log.d("Anki","isReviewQueueNotEmpty $cond1")
-        if(cond1) {
-            var word =  AnoAnki.ReviewReceiver.reviewQueueMap[packakeId]!!.poll()
-            var wordStillInThePackage = uiState.value.paquets[currentPackageId]?.mapWordToCard?.containsKey(word) == true
+        return if(cond1) {
+            val word =  AnoAnki.ReviewReceiver.reviewQueueMap[packakeId]!!.poll()
+            val wordStillInThePackage = uiState.value.paquets[currentPackageId]?.mapWordToCard?.containsKey(word) == true
             if(wordStillInThePackage){
-                return word
+                word
+            } else{
+                ""
             }
-            else{
-                return ""
-            }
-        }
-        else{
-            return ""
+        } else{
+            ""
         }
     }
 
@@ -544,10 +545,13 @@ class AnoViewModel() : ViewModel(){
             searchWord = word
         }
 
-        fun autoCompletion() {
-            listForCompletion.value =
-                mapOfWords.filterKeys { it.startsWith(searchWord) }.keys.toList()
-        }
+    fun autoCompletion() {
+        listForCompletion.value =
+            mapOfWords.filterKeys { it.startsWith(searchWord) }
+                .keys
+                .toList()
+                .take(20)
+    }
 
         fun reinitListCompletion() {
             listForCompletion.value = emptyList()

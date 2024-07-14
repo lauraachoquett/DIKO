@@ -25,7 +25,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -138,7 +137,7 @@ fun DictionaryDefinitionScreen(
                         else{//si aucune définition n'est sélectionnée message d'erreur
                             scope.launch {
                                 snackbarHostState.showSnackbar(
-                                    message = "Une définition au moins doit être sélectionnée",
+                                    message = "Au moins une définition doit être sélectionnée",
                                     duration = SnackbarDuration.Short
                                 )
                             }
@@ -221,9 +220,11 @@ fun DictionaryDefinitionScreen(
                     onCheckedDefinition=onCheckedDefinition,
                 )
             }
-
+            item {
+                Spacer(modifier = Modifier.height(100.dp))
+            }
         }
-        Spacer(modifier = Modifier.height(72.dp))
+
         if(PackageModifierChoice){
             DialogChoice(
                 onDismissRequest = {  PackageModifierChoice=!PackageModifierChoice },

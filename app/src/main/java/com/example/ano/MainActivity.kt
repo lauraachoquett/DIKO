@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DataSource.loadJSONFromRaw(this@MainActivity, R.raw.donnees6)
+                    DataSource.loadJSONFromRaw(this@MainActivity, R.raw.donnees1887words)
                     DataSource.loadCurrentId(this@MainActivity)
                     AnoAnki.ReviewReceiver.restoreReviewQueueMap(this)
                     AnoAnki.restoreDelay(this)

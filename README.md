@@ -1,6 +1,6 @@
 # Diko
 
-**Diko** est une application d'apprentissage de mots en version bêta, actuellement disponible avec 70 mots et uniquement en français.
+**Diko** est une application d'apprentissage de mots en version bêta, actuellement disponible avec plus de 1000 mots et uniquement en français.
 
 ## Fonctionnalités
 

@@ -42,7 +42,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ano.R
-import com.example.readinggoals.ui.theme.Barlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -90,7 +89,6 @@ fun DictionarySearchingScreen(
                 placeholder = {
                     Text(
                         text = stringResource(id = R.string.searching),
-                        fontFamily = Barlow,
                         fontWeight = FontWeight.Light,
                         color = MaterialTheme.colorScheme.primary,
                     )
@@ -129,7 +127,6 @@ fun DictionarySearchingScreen(
             for (word in listForCompletion.value){
                 CardWordCompletion(word,onWordClicked,currentContext as Activity)
             }
-
         }
 
     }

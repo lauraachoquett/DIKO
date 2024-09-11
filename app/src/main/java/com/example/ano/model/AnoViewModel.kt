@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.ano.dataSource.DataSource
+import com.example.ano.dataSource.DataSource.mapOfPackages
 import com.example.ano.dataSource.DataSource.mapOfWords
 import com.example.ano.dataSource.InformationWordByNature
 import com.example.ano.dataSource.extractPairs
@@ -59,6 +60,8 @@ class AnoViewModel() : ViewModel(){
 
     var nowMoreCardToShow : Boolean = true
 
+    var totalLearningCount = 0
+    var totalReviewCount = 0
 
     //Première clé : nature
     lateinit var selectedDefinitionByNature : MutableMap<String,typeSelectedInfoForLearning>
@@ -85,7 +88,7 @@ class AnoViewModel() : ViewModel(){
         updateCurrentPackageId(id)
         if(packageIsNotEmpty()){
             wordOnLearningPackageScreen = getNextReviewCard(currentPackageId)
-            var condition1 = (wordOnLearningPackageScreen != "")
+            val condition1 = (wordOnLearningPackageScreen != "")
             if (condition1 ) {
                 nowMoreCardToShow = false
                 infoDefCurrentWord = uiState.value.paquets[currentPackageId]?.mapWordToCard?.get(wordOnLearningPackageScreen)!!.wordAttributes.listInfoWordByNature!!
@@ -414,6 +417,38 @@ class AnoViewModel() : ViewModel(){
         }
     }
 
+    fun countCardsByType(paquet: paquetAttributes): Pair<Int, Int> {
+        var learningCount = 0
+        var reviewCount = 0
+
+        // Vérifie si mapWordToCard n'est pas null
+        paquet.mapWordToCard?.let { map ->
+            for (card in map.values) {
+                when (card.state) {
+                    is AnoAnki.LearningCard -> learningCount++
+                    is AnoAnki.ReviewCard -> reviewCount++
+                }
+            }
+        }
+
+        return Pair(learningCount, reviewCount)
+    }
+
+    fun countCardsByTypeAll() {
+        totalReviewCount=0
+        totalLearningCount=0
+        // Parcourir tous les paquets dans mapOfPackages
+        for (paquet in mapOfPackages.values) {
+            // Récupérer le nombre de cartes par type pour chaque paquet
+            val (learningCount, reviewCount) = countCardsByType(paquet)
+            Log.d("MyTag", "Nombre de cartes en cours d'apprentissage : $learningCount")
+            Log.d("MyTag", "Nombre de cartes à réviser : $reviewCount")
+            // Ajouter les résultats aux compteurs globaux
+            totalLearningCount += learningCount
+            totalReviewCount += reviewCount
+        }
+    }
+
     fun addWordToPackage(id: Int,context: Context) {
         Log.d("Anki","call addWordToPackage")
         _uiState.update { currentState ->
@@ -550,7 +585,7 @@ class AnoViewModel() : ViewModel(){
             mapOfWords.filterKeys { it.startsWith(searchWord) }
                 .keys
                 .toList()
-                .take(20)
+                .take(8)
     }
 
         fun reinitListCompletion() {

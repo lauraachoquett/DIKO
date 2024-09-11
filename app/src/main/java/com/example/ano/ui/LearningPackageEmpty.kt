@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.readinggoals.ui.theme.Barlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +45,6 @@ fun LearningPackageEmpty(delay : Long){
             ) {
                 Text(
                     text = "Vous avez révisé toutes les cartes de ce paquet" ,
-                    fontFamily = Barlow,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.secondary,
@@ -54,7 +52,6 @@ fun LearningPackageEmpty(delay : Long){
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
                     text = "Prochain mot dans $dayDelay j, $hourDelay h, $minuteDelay m" ,
-                    fontFamily = Barlow,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.secondary,

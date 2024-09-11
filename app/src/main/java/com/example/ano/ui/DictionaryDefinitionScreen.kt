@@ -62,7 +62,6 @@ import com.example.ano.dataSource.InfoDefinitions
 import com.example.ano.dataSource.InformationWordByNature
 import com.example.ano.dataSource.paquetAttributes
 import com.example.ano.model.typeSelectedInfoForLearning
-import com.example.readinggoals.ui.theme.Barlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -197,14 +196,12 @@ fun DictionaryDefinitionScreen(
                 ){
                     Text(
                         text = word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
-                        fontFamily = Barlow,
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
                         color = MaterialTheme.colorScheme.secondary,
                     )
                     Text(
                         text = "   -   [$nature]",
-                        fontFamily = Barlow,
                         fontWeight = FontWeight.Normal,
                         fontSize = 24.sp,
                         color = MaterialTheme.colorScheme.secondary,

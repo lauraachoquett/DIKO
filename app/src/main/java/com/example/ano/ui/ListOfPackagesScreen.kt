@@ -2,12 +2,15 @@ package com.example.ano.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,6 +27,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -45,9 +49,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -59,7 +65,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.ano.R
 import com.example.ano.dataSource.paquetAttributes
-import com.example.readinggoals.ui.theme.Barlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -147,12 +152,13 @@ fun ListOfPackagesScreen(
                 modifier = Modifier.padding(top = 8.dp)
             ) {
                 items(paquets.keys.toList()) { id ->
-                    Element(
+                    MyCardPackage(
                         id = id,
                         name = paquets[id]?.name,
                         size = paquets[id]?.mapWordToCard?.size,
                         wordInQueue = reviewQueueMap[id]?.size,
                         onPackageClicked = onPackageClicked,
+                        listOfTag = listOf("Journal","Politique"),
                         modifier = Modifier.padding(innerPadding),
                         onLongClick = {
                             showBottomSheet=true
@@ -251,7 +257,8 @@ fun actionForBottomSheet(
             .fillMaxWidth()
             .padding(4.dp)
             .clickable {
-                onClick() }
+                onClick()
+            }
     ){
       Text(
           text = text
@@ -339,7 +346,6 @@ fun TextFieldPackage(
         placeholder = {
             Text(
                 text = stringResource(id = R.string.namePackage),
-                fontFamily = Barlow,
                 fontWeight = FontWeight.Light,
                 color = MaterialTheme.colorScheme.primary,
             )
@@ -364,10 +370,137 @@ fun TextFieldPackage(
     )
 }
 
+@Composable
+fun Tag(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
+            .padding(4.dp)
+    ) {
+        Text(
+            text = text,
+            color = Color.Black,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Light
+        )
+    }
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Element(
+fun MyCardPackage(
+    id : Int,
+    name : String?,
+    size : Int?,
+    wordInQueue : Int?,
+    listOfTag : List<String>,
+    onPackageClicked: (Int) -> Unit,
+    onLongClick: (Int)->Unit,
+    modifier: Modifier = Modifier
+) {
+    var size = size
+    var wordInQueue = wordInQueue
+    if (wordInQueue==null){
+        wordInQueue=0
+    }
+    if(size==null){
+        size = 0
+    }
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .combinedClickable(
+                onClick = { onPackageClicked(id) },
+                onLongClick = {
+                    if (id != 0) {
+                        onLongClick(id)
+                    }
+                }
+            )
+
+
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(16.dp)
+            ) {
+                if(name.isNullOrEmpty()){
+                    Text(
+                        text = "",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        lineHeight = 24.sp,
+                        letterSpacing = 0.5.sp,
+                    )
+                }
+                else{
+                    Text(
+                        text = name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        lineHeight = 24.sp,
+                        letterSpacing = 0.5.sp,
+                    )
+                }
+            }
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = "$wordInQueue",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Light,
+                    color = Color(0xFFDD2626)
+                )
+                Spacer(modifier = modifier.height(16.dp))
+                Text(
+                    text = "$size",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Light,
+                    color = Color.Black
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .width(80.dp)
+                    .fillMaxHeight()
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(Color(0xFFFFB68C), Color(0xFFE46962))
+                        )
+                    )
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+
+            }
+        }
+    }
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun CardElement(
     id : Int,
     name: String?,
     size: Int?,
@@ -393,9 +526,10 @@ fun Element(
             .combinedClickable(
                 onClick = { onPackageClicked(id) },
                 onLongClick = {
-                    if(id!=0){
-                        onLongClick(id)}
+                    if (id != 0) {
+                        onLongClick(id)
                     }
+                }
             )
 
     ) {
@@ -405,43 +539,58 @@ fun Element(
             modifier = Modifier.padding(16.dp)
 
             ){
-            if(name.isNullOrEmpty()){
-                Text(
-                    text = "",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                    lineHeight = 24.sp,
-                    letterSpacing = 0.5.sp,
-                )
-            }
-            else{
-                Text(
-                    text = name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                    lineHeight = 24.sp,
-                    letterSpacing = 0.5.sp,
-                )
+            Column(
+                horizontalAlignment = AbsoluteAlignment.Left
+            ) {
+                if(name.isNullOrEmpty()){
+                    Text(
+                        text = "",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        lineHeight = 24.sp,
+                        letterSpacing = 0.5.sp,
+                    )
+                }
+                else{
+                    Text(
+                        text = name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        lineHeight = 24.sp,
+                        letterSpacing = 0.5.sp,
+                    )
+                }
+
             }
             Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "$wordInQueue",
-                fontWeight = FontWeight.Normal,
-                color = Color.Red,
-                fontSize = 20.sp,
-                lineHeight = 24.sp,
-                letterSpacing = 0.5.sp,
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(
-                text = "$size",
-                fontWeight = FontWeight.Normal,
-                fontSize = 20.sp,
-                lineHeight = 24.sp,
-                letterSpacing = 0.5.sp,
-            )
+            HorizontalDivider()
+            Spacer(modifier = Modifier.weight(1f))
+            Column {
+                Text(
+                    text = "$wordInQueue",
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Red,
+                    fontSize = 20.sp,
+                    lineHeight = 24.sp,
+                    letterSpacing = 0.5.sp,
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "$size",
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 20.sp,
+                    lineHeight = 24.sp,
+                    letterSpacing = 0.5.sp,
+                )
+            }
+
+
 
         }
     }
 }
+
+
+
+
 

@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    SharedPreferencesManager.clearSharedPreferences(this)
                     DataSource.loadJSONFromRaw(this@MainActivity, R.raw.donnees1887words)
                     DataSource.loadCurrentId(this@MainActivity)
                     AnoAnki.ReviewReceiver.restoreReviewQueueMap(this)

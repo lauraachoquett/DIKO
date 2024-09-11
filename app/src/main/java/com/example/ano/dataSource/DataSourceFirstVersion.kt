@@ -2,7 +2,7 @@ package com.example.ano.dataSource
 
 data class WordInfoF(
     var definitions: List<String>,
-    var isFavorite : Boolean = false
+    var isFavorite : Boolean = false,
 )
 
 object DataSourceFirstVersion {

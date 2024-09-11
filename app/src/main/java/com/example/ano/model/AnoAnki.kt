@@ -52,11 +52,12 @@ class AnoAnki {
 
     }
 
+
+
     enum class ReviewTime(val delayInMillis: Long){
         IMMEDIATE(1000L *1 *60), //1 minutes
         SHORT_TERM(1000L*1*3600), //1 heure
         LONG_TERM(1000L*1*3600*24), //1 jour
-
     }
 
     interface CardState {

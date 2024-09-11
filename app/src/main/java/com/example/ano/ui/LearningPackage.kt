@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ano.R
 import com.example.ano.dataSource.InformationWordByNature
-import com.example.readinggoals.ui.theme.Barlow
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,7 +76,6 @@ fun LearningPackage(
                 ) {
                     Text(
                         text = word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
-                        fontFamily = Barlow,
                         fontWeight = FontWeight.Bold,
                         fontSize = 32.sp,
                         color = MaterialTheme.colorScheme.secondary,
@@ -160,7 +158,6 @@ fun ListOfdef(
     var nature = wordInfos.nature
     Text(
         text = "$nature",
-        fontFamily = Barlow,
         fontWeight = FontWeight.Normal,
         fontSize = 24.sp,
         color = MaterialTheme.colorScheme.secondary,

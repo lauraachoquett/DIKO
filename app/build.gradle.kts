@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.serialization") version "1.5.0"
+    id("com.google.firebase.appdistribution")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -22,6 +24,11 @@ android {
     }
 
     buildTypes {
+        firebaseAppDistribution {
+            appId = "diko-652b0" // Remplacez par l'ID de votre application
+            groups = "testers" // Groupes de testeurs Firebase
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -51,7 +58,8 @@ android {
 }
 
 dependencies {
-
+    implementation ("androidx.compose.ui:ui-text-google-fonts:1.1.1")
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.26.1-alpha")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")

@@ -271,6 +271,11 @@
     <string name="dictionary">Dictionnaire</string>
     <string name="dropdown_menu">"Dropdown menu"</string>
     <string name="favorites">Mes mots</string>
+    <string name="gcm_defaultSenderId" translatable="false">301535277025</string>
+    <string name="google_api_key" translatable="false">AIzaSyDyQNZHQ8wiO3lPXAZGr3sIxLEsGWIFgy8</string>
+    <string name="google_app_id" translatable="false">1:301535277025:android:130eb5b7451dcd389d2ca0</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDyQNZHQ8wiO3lPXAZGr3sIxLEsGWIFgy8</string>
+    <string name="google_storage_bucket" translatable="false">diko-652b0.appspot.com</string>
     <string name="histrory">Historique</string>
     <string name="in_progress">In progress</string>
     <string name="indeterminate">Partially checked</string>
@@ -342,6 +347,7 @@
     <string name="off">Off</string>
     <string name="on">On</string>
     <string name="paquet">Paquets</string>
+    <string name="project_id" translatable="false">diko-652b0</string>
     <string name="range_end">"Range end"</string>
     <string name="range_start">"Range start"</string>
     <string name="searching">Rechercher</string>
@@ -412,14 +418,23 @@
         <attr format="reference" name="fontProviderCerts"/>
         
         <attr name="fontProviderFetchStrategy">
-            
+            <!-- The blocking font fetch works as follows.
+              First, check the local cache, then if the requested font is not cached, request the
+              font from the provider and wait until it is finished.  You can change the length of
+              the timeout by modifying fontProviderFetchTimeout.  If the timeout happens, the
+              default typeface will be used instead. -->
             <enum name="blocking" value="0"/>
-            
+            <!-- The async font fetch works as follows.
+              First, check the local cache, then if the requeted font is not cached, trigger a
+              request the font and continue with layout inflation. Once the font fetch succeeds, the
+              target text view will be refreshed with the downloaded font data. The
+              fontProviderFetchTimeout will be ignored if async loading is specified. -->
             <enum name="async" value="1"/>
         </attr>
         
         <attr format="integer" name="fontProviderFetchTimeout">
-            
+            <!-- A special value for the timeout. In this case, the blocking font fetching will not
+              timeout and wait until a reply is received from the font provider. -->
             <enum name="forever" value="-1"/>
         </attr>
         

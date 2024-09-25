@@ -161,11 +161,17 @@
     <string name="derives">Dérivés</string>
     <string name="dictionary">Dictionnaire</string>
     <string name="favorites">Mes mots</string>
+    <string name="gcm_defaultSenderId" translatable="false">301535277025</string>
+    <string name="google_api_key" translatable="false">AIzaSyDyQNZHQ8wiO3lPXAZGr3sIxLEsGWIFgy8</string>
+    <string name="google_app_id" translatable="false">1:301535277025:android:130eb5b7451dcd389d2ca0</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDyQNZHQ8wiO3lPXAZGr3sIxLEsGWIFgy8</string>
+    <string name="google_storage_bucket" translatable="false">diko-652b0.appspot.com</string>
     <string name="histrory">Historique</string>
     <string name="learningPackage">Mes mots</string>
     <string name="listWordsPackage">Mots dans ce paquet</string>
     <string name="namePackage">Nom du paquet</string>
     <string name="paquet">Paquets</string>
+    <string name="project_id" translatable="false">diko-652b0</string>
     <string name="searching">Rechercher</string>
     <string name="syn">Synonymes</string>
     <style name="Theme.Ano" parent="android:Theme.Material.Light.NoActionBar">

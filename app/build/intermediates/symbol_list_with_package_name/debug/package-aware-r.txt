@@ -392,6 +392,11 @@ string derives
 string dictionary
 string dropdown_menu
 string favorites
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
 string histrory
 string in_progress
 string indeterminate
@@ -459,6 +464,7 @@ string not_selected
 string off
 string on
 string paquet
+string project_id
 string range_end
 string range_start
 string searching

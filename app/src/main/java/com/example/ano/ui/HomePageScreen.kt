@@ -203,7 +203,7 @@ fun HomePageScreenDesign(
                     }
                 }
                 val chartColors = listOf(
-                    Color(0xFF3869B0),
+                    Color(0xFFEE835F),
                     Color(0xFF86231B)
                 )
                 Spacer(modifier = Modifier.height(32.dp))

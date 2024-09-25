@@ -1,16 +1,16 @@
-#Wed Sep 11 22:34:31 CEST 2024
+#Wed Sep 25 18:39:49 CEST 2024
 base.0=/Users/laura/AndroidStudioProjects/Ano/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/Users/laura/AndroidStudioProjects/Ano/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.2=/Users/laura/AndroidStudioProjects/Ano/app/build/intermediates/dex/debug/mergeProjectDexDebug/4/classes.dex
-base.3=/Users/laura/AndroidStudioProjects/Ano/app/build/intermediates/dex/debug/mergeProjectDexDebug/14/classes.dex
-base.4=/Users/laura/AndroidStudioProjects/Ano/app/build/intermediates/dex/debug/mergeProjectDexDebug/3/classes.dex
+base.2=/Users/laura/AndroidStudioProjects/Ano/app/build/intermediates/dex/debug/mergeProjectDexDebug/14/classes.dex
+base.3=/Users/laura/AndroidStudioProjects/Ano/app/build/intermediates/dex/debug/mergeProjectDexDebug/3/classes.dex
+base.4=/Users/laura/AndroidStudioProjects/Ano/app/build/intermediates/dex/debug/mergeProjectDexDebug/4/classes.dex
 base.5=/Users/laura/AndroidStudioProjects/Ano/app/build/intermediates/dex/debug/mergeProjectDexDebug/7/classes.dex
 base.6=/Users/laura/AndroidStudioProjects/Ano/app/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
 path.0=classes.dex
 path.1=0/classes.dex
-path.2=4/classes.dex
-path.3=14/classes.dex
-path.4=3/classes.dex
+path.2=14/classes.dex
+path.3=3/classes.dex
+path.4=4/classes.dex
 path.5=7/classes.dex
 path.6=classes2.dex
 renamed.0=classes.dex

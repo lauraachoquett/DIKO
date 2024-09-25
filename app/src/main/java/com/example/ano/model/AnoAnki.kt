@@ -31,6 +31,9 @@ class AnoAnki {
 
         fun calculateDelayBeforeNextCard(id : Int) {
             delayBeforeNextCardByPackage[id] = -(System.currentTimeMillis() - currentTimeOfTheLastUpdateByPackage[id]!! - minDelayCardByPackage[id]!!)
+            if (delayBeforeNextCardByPackage[id]!! < 0.toLong()){
+                delayBeforeNextCardByPackage[id] = 0
+            }
         }
 
 

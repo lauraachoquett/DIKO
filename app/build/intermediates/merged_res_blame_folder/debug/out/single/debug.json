@@ -1,246 +1,242 @@
 [
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_interrogation.png.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/interrogation.png"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/raw_donnees2.json.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/raw/donnees2.json"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_baseline_expand_more_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/baseline_expand_more_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_home_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_home_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-hdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_star_outline_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_star_outline_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/raw_donnees.json.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/raw/donnees.json"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_homepageimagewithoutcorner.png.flat",
+        "source": "com.example.ano.app-main-54:/drawable/homepageimagewithoutcorner.png"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_baseline_expand_more_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/baseline_expand_more_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/raw_donnees.json.flat",
+        "source": "com.example.ano.app-main-54:/raw/donnees.json"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_ano_homeimage.png.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/ano_homeimage.png"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_interrogation.png.flat",
+        "source": "com.example.ano.app-main-54:/drawable/interrogation.png"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_homepagev1.png.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/homepagev1.png"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-xhdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_anopackage.png.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/anopackage.png"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-mdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_check_circle_outline_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_check_circle_outline_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/raw_donnees5.json.flat",
+        "source": "com.example.ano.app-main-54:/raw/donnees5.json"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_edit_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_edit_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_ano_search_book.png.flat",
+        "source": "com.example.ano.app-main-54:/drawable/ano_search_book.png"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/raw_donnees5.json.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/raw/donnees5.json"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_baseline_expand_less_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/baseline_expand_less_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-xxxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-mdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/ic_launcher_foreground.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_homepageimagewithoutcorner.png.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/homepageimagewithoutcorner.png"
+        "merged": "com.example.ano.app-merged_res-52:/drawable-hdpi_jpg4xbottomimage.jpeg.flat",
+        "source": "com.example.ano.app-main-54:/drawable-hdpi/jpg4xbottomimage.jpeg"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-xhdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_homepagev1.png.flat",
+        "source": "com.example.ano.app-main-54:/drawable/homepagev1.png"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/xml_data_extraction_rules.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/xml/data_extraction_rules.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_baseline_format_list_bulleted_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/baseline_format_list_bulleted_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_delete_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_delete_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/raw_donnees4.json.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/raw/donnees4.json"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_edit_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_edit_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "com.example.ano.app-merged_res-52:/raw_donnees6.json.flat",
+        "source": "com.example.ano.app-main-54:/raw/donnees6.json"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_baseline_more_vert_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/baseline_more_vert_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_ano_history.png.flat",
+        "source": "com.example.ano.app-main-54:/drawable/ano_history.png"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/raw_donnees3.json.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/raw/donnees3.json"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_home_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_home_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_delete_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_delete_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/xml_font_certs.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/xml/font_certs.xml"
+        "merged": "com.example.ano.app-merged_res-52:/raw_donnees1887words.json.flat",
+        "source": "com.example.ano.app-main-54:/raw/donnees1887words.json"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_star_outline_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_star_outline_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_search_image.png.flat",
+        "source": "com.example.ano.app-main-54:/drawable/search_image.png"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_ano_favorite.png.flat",
+        "source": "com.example.ano.app-main-54:/drawable/ano_favorite.png"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/ic_launcher_foreground.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_more_vert_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_more_vert_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_ano_search_book.png.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/ano_search_book.png"
+        "merged": "com.example.ano.app-merged_res-52:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.ano.app-main-54:/xml/data_extraction_rules.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_ano_loge.png.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/ano_loge.png"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_anopackage.png.flat",
+        "source": "com.example.ano.app-main-54:/drawable/anopackage.png"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_search_image.png.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/search_image.png"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_baseline_post_add_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/baseline_post_add_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_menu_book_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_menu_book_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/xml_backup_rules.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/xml/backup_rules.xml"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_baseline_format_list_bulleted_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/baseline_format_list_bulleted_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_star_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_star_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_ano_history.png.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/ano_history.png"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/raw_donnees1887words.json.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/raw/donnees1887words.json"
+        "merged": "com.example.ano.app-merged_res-52:/raw_donnees4.json.flat",
+        "source": "com.example.ano.app-main-54:/raw/donnees4.json"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/raw_donnees6.json.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/raw/donnees6.json"
+        "merged": "com.example.ano.app-merged_res-52:/font_barlow_light.ttf.flat",
+        "source": "com.example.ano.app-main-54:/font/barlow_light.ttf"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_search_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_search_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_star_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_star_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_history_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_history_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/ic_launcher_background.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/font_barlow_regular.ttf.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/font/barlow_regular.ttf"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_baseline_more_vert_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/baseline_more_vert_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_ano_favorite.png.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/ano_favorite.png"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_check_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_check_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_baseline_expand_less_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/baseline_expand_less_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/xml_backup_rules.xml.flat",
+        "source": "com.example.ano.app-main-54:/xml/backup_rules.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_check_circle_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_check_circle_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_menu_book_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_menu_book_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_check_circle_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_check_circle_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_history_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_history_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-hdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.ano.app-merged_res-52:/raw_donnees2.json.flat",
+        "source": "com.example.ano.app-main-54:/raw/donnees2.json"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable-hdpi_jpg4xbottomimage.jpeg.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable-hdpi/jpg4xbottomimage.jpeg"
+        "merged": "com.example.ano.app-merged_res-52:/drawable-hdpi_svgbottomimage.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable-hdpi/svgbottomimage.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_check_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_check_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_search_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_search_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_baseline_post_add_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/baseline_post_add_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_ano_loge.png.flat",
+        "source": "com.example.ano.app-main-54:/drawable/ano_loge.png"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-xxhdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.ano.app-merged_res-52:/font_barlow_bold.ttf.flat",
+        "source": "com.example.ano.app-main-54:/font/barlow_bold.ttf"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "com.example.ano.app-merged_res-52:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.ano.app-main-54:/mipmap-xxhdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable-hdpi_svgbottomimage.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable-hdpi/svgbottomimage.xml"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_ano_homeimage.png.flat",
+        "source": "com.example.ano.app-main-54:/drawable/ano_homeimage.png"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/font_barlow_bold.ttf.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/font/barlow_bold.ttf"
+        "merged": "com.example.ano.app-merged_res-52:/drawable_round_check_circle_outline_24.xml.flat",
+        "source": "com.example.ano.app-main-54:/drawable/round_check_circle_outline_24.xml"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/font_barlow_light.ttf.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/font/barlow_light.ttf"
+        "merged": "com.example.ano.app-merged_res-52:/font_barlow_regular.ttf.flat",
+        "source": "com.example.ano.app-main-54:/font/barlow_regular.ttf"
     },
     {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_ic_launcher_background.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/ic_launcher_background.xml"
-    },
-    {
-        "merged": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-merged_res-51:/drawable_round_more_vert_24.xml.flat",
-        "source": "/Users/laura/.gradle/daemon/8.0/com.example.ano.app-main-53:/drawable/round_more_vert_24.xml"
+        "merged": "com.example.ano.app-merged_res-52:/raw_donnees3.json.flat",
+        "source": "com.example.ano.app-main-54:/raw/donnees3.json"
     }
 ]

@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+app/google-services.json
+# Ignore les fichiers de build Android
+/app/build/

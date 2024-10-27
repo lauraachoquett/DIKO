@@ -22,7 +22,7 @@ This is a Kotlin application designed to help users learn new words effectively,
       </td>
       <td align="center">
         <strong>Word Card</strong><br>
-        <img src="guerite_card.png" alt="Word Card" width="250"/>
+        <img src="guerite_card.jpeg" alt="Word Card" width="250"/>
       </td>
       <td align="center">
         <strong>Example Word Details</strong><br>

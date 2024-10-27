@@ -13,14 +13,24 @@ This is a Kotlin application designed to help users learn new words effectively,
 
 ## Screenshots 📱
 
-### Home Page
-![Home Page](./images/diko_HomePageScreen.jpeg)
-
-### Word Card
-![Word Card](./images/guerite_card.jpeg)
-
-### Example Word Details
-![Word Details](./images/quidam_example.jpeg)
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <strong>Home Page</strong><br>
+        <img src="diko_HomePageScreen.png" alt="Home Page" width="250"/>
+      </td>
+      <td align="center">
+        <strong>Word Card</strong><br>
+        <img src="guerite_card.png" alt="Word Card" width="250"/>
+      </td>
+      <td align="center">
+        <strong>Example Word Details</strong><br>
+        <img src="quidam_example.png" alt="Word Details" width="250"/>
+      </td>
+    </tr>
+  </table>
+</div>
 
 
 This app utilizes a dictionary licensed from Wikipedia, which allows it to provide a rich selection of words and definitions.

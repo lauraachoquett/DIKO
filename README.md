@@ -33,7 +33,6 @@ This is a Kotlin application designed to help users learn new words effectively,
 </div>
 
 
-This app utilizes a dictionary licensed from Wikipedia, which allows it to provide a rich selection of words and definitions.
 
 ## Future Plans
 

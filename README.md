@@ -9,7 +9,6 @@ This is a Kotlin application designed to help users learn new words effectively,
 - **Synonyms and Derivatives**: Each word entry includes examples, synonyms and derivatives, helping users understand words in context.
 - **Customizable Learning**: Users can select specific definitions they want to focus on, tailoring the learning experience to their needs.
 - **Adaptive Reminders**: While notifications are not yet implemented, the app still adapts to the user's learning speed. Words that are mastered quickly are shown less frequently, reinforcing learning retention.
-- **Progress Tracking**: The app intelligently adapts to your progress. Words you learn faster appear less frequently, helping to optimize review sessions.
 
 ## Screenshots 📱
 
